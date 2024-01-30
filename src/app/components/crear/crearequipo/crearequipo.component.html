@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ver equipos</title>
+  </head>
+  <body>
+    <div class ="container">
+      <div class = "card  pad" >
+          <h3 class="card-title bg-warning text-center mb-30 ">INTRODUCE DATOS</h3>
+          <div class = "card-body">
+
+<form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-3 "  id="formul">
+
+
+  <div class= "mb-10" >
+
+    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Marca</label>
+    <input type="text" class="form-control" name="marca" [(ngModel)]="selectedEquipo.marca"  id="autoSizingInput" placeholder="{{selectedEquipo.marca}}">
+  </div>
+
+  <div class="mb-10">
+    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Modelo</label>
+    <input type="text" class="form-control" name="modelo" [(ngModel)]="selectedEquipo.modelo"  id="autoSizingInput" placeholder="{{selectedEquipo.modelo}}">
+  </div>
+
+  <div class="mb-10" >
+    <label  style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Fabricante</label>
+    <input type="text" class="form-control" name="fabricante" [(ngModel)]="selectedEquipo.fabricante"  id="autoSizingInput" placeholder="{{selectedEquipo.fabricante}}">
+  </div>
+
+  <div class="mb-10" >
+    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Num Serie</label>
+    <input type="text" class="form-control" name="numSerie" [(ngModel)]="selectedEquipo.numSerie"  id="autoSizingInput" placeholder="{{selectedEquipo.numSerie}}">
+  </div>
+
+  <div  class="mb-10" >
+    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Fecha Fabricacion</label>
+    <input type="date" class="form-control" name="fechaFabricacion" [(ngModel)]="selectedEquipo.fechaFabricacion"  id="autoSizingInput" placeholder="{{selectedEquipo.fechaFabricacion}}">
+  </div>
+
+  <div class="mb-10" >
+    <label    style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Fecha Caducidad</label>
+    <input type="date" class="form-control" name="fechaCaducidad" [(ngModel)]="selectedEquipo.fechaCaducidad"  id="autoSizingInput" placeholder="{{selectedEquipo.fechaCaducidad}}">
+  </div>
+
+  <div class="mb-10" >
+    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Fecha Entrega</label>
+    <input type="date" class="form-control" name="fechaEntrega" [(ngModel)]="selectedEquipo.fechaEntrega"  id="autoSizingInput" placeholder="{{selectedEquipo.fechaEntrega}}">
+  </div>
+
+  <div class="mb-10" >
+    <label   style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Fecha Mnto</label>
+    <input type="date" class="form-control" name="fechaMantenimiento" [(ngModel)]="selectedEquipo.fechaMantenimiento"  id="autoSizingInput" placeholder="{{selectedEquipo.fechaMantenimiento}}">
+  </div>
+
+  <div class="mb-10" >
+    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Cod AiviaGo</label>
+    <input type="text" class="form-control" name="codAiviago" [(ngModel)]="selectedEquipo.codAiviago"  id="autoSizingInput" placeholder="{{selectedEquipo.codAiviago}}">
+  </div>
+
+  <div class="mb-10" >
+    <label  style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">PIN</label>
+    <input type="text" class="form-control" name="pin" [(ngModel)]="selectedEquipo.pin"  id="autoSizingInput" placeholder="{{selectedEquipo.pin}}">
+  </div>
+
+  <div class="mb-10" >
+    <label  style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">PUK</label>
+    <input type="text" class="form-control" name="puk" [(ngModel)]="selectedEquipo.puk"  id="autoSizingInput" placeholder="{{selectedEquipo.puk}}">
+  </div>
+
+  <div class="mb-10" >
+    <label  style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Operador</label>
+    <input type="text" class="form-control" name="operador" [(ngModel)]="selectedEquipo.operador"  id="autoSizingInput" placeholder="{{selectedEquipo.operador}}">
+  </div>
+
+  <div class="mb-10" >
+    <label  style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Tlfno AiviaGo</label>
+    <input type="text" class="form-control" name="numtlfnoAiviago" [(ngModel)]="selectedEquipo.numtlfnoAiviago"  id="autoSizingInput" placeholder="{{selectedEquipo.numtlfnoAiviago}}">
+  </div>
+
+  <div class="mb-10" >
+    <label   style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Ref Cabina</label>
+    <input type="text" class="form-control" name="refCabina" [(ngModel)]="selectedEquipo.refCabina"  id="autoSizingInput" placeholder="{{selectedEquipo.refCabina}}">
+  </div>
+
+
+<div class="row g-3 " >
+  <div class="col-4">
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <label class="form-check-label"  style ="background-color: rgb(252, 252, 202)" for="inlineCheckbox1">Condicion de usado</label>
+  </div>
+  </div>
+
+
+  <div class="col-4">
+  <div class="ml-2 form-check form-check-inline ">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <label class="form-check-label" style ="background-color: rgb(252, 252, 202)" for="inlineCheckbox2">Doc creada</label>
+  </div>
+  </div>
+
+
+  <div class="col-4">
+  <div class="ml-2 form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+  <label class="form-check-label" style ="background-color: rgb(252, 252, 202)" for="inlineCheckbox3">Señalética</label>
+  </div>
+  </div>
+
+
+</div>
+
+
+
+  <div class="mb10 text-center pad">
+    <button type="submit" class="btn btn-secondary">Modificar Equipo</button>
+  </div>
+  <div class="mb10 text-center pad">
+    <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
+  </div>
+  <div class="mb10 text-center pad">
+    <button type="submit" class="btn btn-success"  (click)="guardar()" (click)="guardar()" name="bot" id="autoSizing" value="Input">Crear Equipo</button>
+  </div>
+
+
+
+</form>
+
+
+</div>
+</div>
+</div>
+</body>
+</html>
