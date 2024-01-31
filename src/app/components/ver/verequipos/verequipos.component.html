@@ -8,73 +8,85 @@
   </head>
   <body>
 
-<div class ="container">
-  <div class = "card">
-      <h3 class="text-center">Lista de equipos</h3>
-      <div class = "card-body">
-          <table class="table table-striped">
-              <thead>
-                  <th>Id</th>
-                  <th> Marca</th>
-                  <th> Modelo</th>
-                  <th> Fabricante</th>
-                  <th>Num serie</th>
-                  <th>Fecha Fabrica</th>
-                  <th>Fecha caducidad</th>
-                  <th>Fecha entrega</th>
-                  <th>Fecha revision</th>
-                  <th>Aivia Go</th>
-                  <th>PIN</th>
-                  <th>PUK</th>
-                  <th>Operador</th>
-                  <th>N Tlfno</th>
-                  <th>Ref cabina</th>
-                  <th>Usado</th>
-                  <th>Doc uso</th>
-                  <th>Carteles</th>
+<!-- <div class ="container"> -->
+ <!-- <div class = "card"> -->
+      <h3 class="text-center bg-warning">Lista de equipos</h3>
 
-             </thead>
-              <tbody>
-                  <tr *ngFor = "let equipo of equipos">
+      <div class ="container-fluid">
+        <div class = "card">
 
-                      <td> {{ equipo.id}}</td>
-                      <td> {{ equipo.marca}}</td>
-                      <td> {{ equipo.modelo}}</td>
-                      <td> {{ equipo.fabricante}}</td>
-                      <td> {{ equipo.numSerie}}</td>
-                      <td> {{ equipo.fechaFabricacion}}</td>
-                      <td> {{ equipo.fechaCaducidad}}</td>
-                      <td> {{ equipo.fechaEntrega}}</td>
-                      <td> {{ equipo.fechaMantenimiento}}</td>
-                      <td> {{ equipo.codAiviago}}</td>
-                      <td> {{ equipo.pin}}</td>
-                      <td> {{ equipo.puk}}</td>
-                      <td> {{ equipo.operador}}</td>
-                      <td> {{ equipo.numtlfnoAiviago}}</td>
-                      <td> {{ equipo.refCabina}}</td>
-                      <td> {{ equipo.condicionUsado}}</td>
-                      <td> {{ equipo.docUsoCreada}}</td>
-                      <td> {{ equipo.senaletica}}</td>
-                      <td><button (click)="deleteEquipo(equipo)" class="btn btn-danger">Delete</button></td>
-                      <td><button [routerLink]="['/cardio/menuPrincipal/equipos/edit', equipo.id]" class="btn btn-secondary"  >Update</button></td>
-                  </tr>
-                </tbody>
-              </table>
+          <cdk-virtual-scroll-viewport itemSize="30">
+                  <table class="table table-striped table table-hover">
 
+                      <thead>
+                          <th>Id</th>
+                          <th> Marca</th>
+                          <th> Modelo</th>
+                          <th> Fabricante</th>
+                          <th>Num serie</th>
+                          <th>Fecha Fabrica</th>
+                          <th>Fecha caducidad</th>
+                          <th>Fecha entrega</th>
+                          <th>Fecha revision</th>
+                          <th>Aivia Go</th>
+                          <th>PIN</th>
+                          <th>PUK</th>
+                          <th>Operador</th>
+                          <th>N Tlfno</th>
+                          <th>Ref cabina</th>
+                          <th>Usado</th>
+                          <th>Doc uso</th>
+                          <th>Carteles</th>
+                          <th>Asignado</th>
+                      </thead>
+                      <tbody>
 
+                          <tr *cdkVirtualFor = "let equipo of equipos" >
+
+                              <td> {{ equipo.id}} </td>
+                              <td> {{ equipo.marca}}</td>
+                              <td> {{ equipo.modelo}}</td>
+                              <td> {{ equipo.fabricante}}</td>
+                              <td> {{ equipo.numSerie}}</td>
+                              <td> {{ equipo.fechaFabricacion}}</td>
+                              <td> {{ equipo.fechaCaducidad}}</td>
+                              <td> {{ equipo.fechaEntrega}}</td>
+                              <td> {{ equipo.fechaMantenimiento}}</td>
+                              <td> {{ equipo.codAiviago}}</td>
+                              <td> {{ equipo.pin}}</td>
+                              <td> {{ equipo.puk}}</td>
+                              <td> {{ equipo.operador}}</td>
+                              <td> {{ equipo.numtlfnoAiviago}}</td>
+                              <td> {{ equipo.refCabina}}</td>
+                              <td> {{ equipo.condicionUsado}}</td>
+                              <td> {{ equipo.docUsoCreada}}</td>
+                              <td> {{ equipo.senaletica}}</td>
+                              <td> {{equipo.asignado}}</td>
+
+                              <td><button (click)="deleteEquipo(equipo)" class="btn btn-danger">Delete</button></td>
+                              <td><button [routerLink]="['/cardio/menuPrincipal/equipos/edit', equipo.id]" class="btn btn-secondary"  >Update</button></td>
+                          </tr>
+
+                      </tbody>
+                      </table>
+                      </cdk-virtual-scroll-viewport>
+                      <div class = "card">
               <div class="grid text-center">
                 <div class="g-col-4 g-col-md-10">
-                  <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
-                  <button [routerLink]="['/cardio/menuPrincipal/equipos/edit']" class="btn btn-success"   style="margin-left: 100px">Crear Equipo</button>
-               </div>
-              </div>
 
+                    <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
+                    <button [routerLink]="['/cardio/menuPrincipal/equipos/edit']" class="btn btn-success"   style="margin-left: 100px">Crear Equipo</button>
+                </div>
+             </div>
 
+             </div>
             </div>
 
+         </div>
 
-            </div>
-          </div>
+
+            <!-- </div> -->
+          <!-- </div> -->
 
           </body>
         </html>

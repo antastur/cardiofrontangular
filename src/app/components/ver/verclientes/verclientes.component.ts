@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cliente } from 'src/app/shared/models/cliente';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
@@ -8,7 +8,7 @@ import { ClientesService } from 'src/app/shared/services/clientes.service';
   templateUrl: './verclientes.component.html',
   styleUrls: ['./verclientes.component.css']
 })
-export class VerclientesComponent {
+export class VerclientesComponent implements OnInit {
     //Declaracion de variables
     clientes!: Cliente[];
 
@@ -16,7 +16,7 @@ export class VerclientesComponent {
   constructor(public clientesServicio: ClientesService,private router: Router){}
 
   ngOnInit(): void {
-     //se cargan todos los alumnos de BD
+     //se cargan todos los clientes de BD
      this.reloadData();
   }
 
@@ -26,7 +26,7 @@ export class VerclientesComponent {
   }
 
 
-  //Metodo para borrar un
+  //Metodo para borrar un cliente de BD
   deleteCliente(cliente: Cliente):void{
     console.log('borrado');
     console.log(cliente.id);

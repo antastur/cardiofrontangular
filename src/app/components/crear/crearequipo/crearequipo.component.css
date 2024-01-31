@@ -4,3 +4,9 @@
 
   padding-top:30px;
 }
+
+cdk-virtual-scroll-viewport {
+
+  height: 100px;
+
+}

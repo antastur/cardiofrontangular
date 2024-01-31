@@ -28,7 +28,7 @@ export class VerequiposComponent implements OnInit{
   }
 
 
-  //Metodo para borrar un
+  //Metodo para borrar un equipo
   deleteEquipo(equipo: Equipo):void{
     console.log('borrado');
     console.log(equipo.id);
@@ -39,5 +39,9 @@ export class VerequiposComponent implements OnInit{
 
       }
 
+  //Metodo para ir a pantalla de asignar cliente
+      irAsignar(equipo: Equipo):void{
+        this.router.navigateByUrl('/cardio/menuPrincipal/equipos/'+equipo.id);
+      }
 
 }

@@ -18,6 +18,9 @@ import { VervehiculosComponent } from './components/ver/vervehiculos/vervehiculo
 import { VerlugaresComponent } from './components/ver/verlugares/verlugares.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -34,13 +37,16 @@ import { FormsModule } from '@angular/forms';
     VerformacionesComponent,
     VerespaciosComponent,
     VervehiculosComponent,
-    VerlugaresComponent
+    VerlugaresComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    ScrollingModule,
+    MatTableModule
 
   ],
   providers: [],

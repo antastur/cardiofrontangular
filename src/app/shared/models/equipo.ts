@@ -18,5 +18,7 @@ export class Equipo {
   condicionUsado:boolean = false;
   docUsoCreada: boolean = false;
   senaletica: boolean = false;
+  asignado: boolean =false;
+
 
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Equipo } from '../models/equipo';
+import { Cliente } from '../models/cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { Equipo } from '../models/equipo';
 export class EquiposService {
 
   private baseUrl = "http://localhost:8080/cardio/menuPrincipal/equipos";
+
+  private baseUrl2 = "http://localhost:8080/cardio/menuPrincipal/clientes";
 
   constructor(private http: HttpClient) { }
 
@@ -44,6 +47,9 @@ export class EquiposService {
 
 
 
+  getClientes(): Observable<Cliente[]>{
+          return this.http.get<Cliente[]>(this.baseUrl2);
+        }
 
 
 
