@@ -39,9 +39,11 @@ export class VerequiposComponent implements OnInit{
 
       }
 
+
   //Metodo para ir a pantalla de asignar cliente
       irAsignar(equipo: Equipo):void{
-        this.router.navigateByUrl('/cardio/menuPrincipal/equipos/'+equipo.id);
+
+        this.router.navigateByUrl('/cardio/menuPrincipal/espacios/'+equipo.id);
       }
 
 }

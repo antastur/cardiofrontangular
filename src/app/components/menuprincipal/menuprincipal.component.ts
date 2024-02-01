@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { MenuprincipalService } from './../../shared/services/menuprincipal.service';
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuprincipalComponent implements OnInit{
 
-  constructor(public menuprincipalService: MenuprincipalService,private router: Router) { }
+  constructor(private router: Router) { }
   ngOnInit(): void {
 
   }

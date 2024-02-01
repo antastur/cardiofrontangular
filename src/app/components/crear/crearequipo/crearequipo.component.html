@@ -4,12 +4,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ver equipos</title>
+<title>crear equipo</title>
   </head>
   <body>
     <div class ="container">
       <div class = "card  pad" >
-          <h3 class="card-title bg-warning text-center mb-30 ">INTRODUCE DATOS</h3>
+          <h2 class="card-title bg-warning text-center mb-30 ">INTRODUCE DATOS</h2>
           <div class = "card-body">
 
 <form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-3 "  id="formul">
@@ -134,19 +134,28 @@
         </div>
 
 
-        <div class="mb10 text-center pad">
+        <div class="mb10 pad">
+          <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un cliente</label>
           <cdk-virtual-scroll-viewport itemSize="50">
             <select class="form-select" aria-label="Asignar"  [(ngModel)]="cliente" name="cliente">
-              <option [ngValue]="null">Asignalo a un cliente</option>
+            <!-- <option [ngValue]="null">Asignalo a un cliente</option> -->
               <option *cdkVirtualFor="let client of clientes" [ngValue]="client"> {{client.nombEmp}} </option>
             </select>
           </cdk-virtual-scroll-viewport>
+
+
+          <div class="mb10 text-center ">
+            <button type="submit" class="btn btn-success"(click)="IrAsignarCliente()"  name="ir" id="autoSizing" value="Input" >Asignar Cliente</button>
+          </div>
+
+
         </div>
 
 
 
+
         <ng-template #val>
-          <div class="mb10 text-center pad">
+          <div class="mb10 text-center">
             <button type="submit" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input">Crear Equipo</button>
           </div>
         </ng-template>

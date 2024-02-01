@@ -49,16 +49,17 @@ export class CrearequipoComponent implements OnInit{
 
 
     //Manda el equipo seteado a traves de la api
-   if(this.cliente.id>0){
-    console.log("clienteid");
-    this.selectedEquipo.asignado= true;
-   }
-
-   this.equiposService.update(this.selectedEquipo).subscribe();
+    this.equiposService.update(this.selectedEquipo).subscribe();
 
    this.router.navigateByUrl('/cardio/menuPrincipal/equipos');
 }
 
+  IrAsignarCliente(){
+    if(this.cliente.id>0){
+      this.router.navigateByUrl('/cardio/menuPrincipal/clientes/edit/'+this.cliente.id);
+
+    }
+  }
 
   //Metodo que redirecciona a un equipo en particular o deja uno vacio
   cargar():void{
