@@ -1,0 +1,11 @@
+
+.pad {
+
+  padding-top:80px;
+}
+
+cdk-virtual-scroll-viewport {
+
+  height: 70px;
+
+}

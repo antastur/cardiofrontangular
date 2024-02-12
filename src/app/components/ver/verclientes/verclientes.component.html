@@ -1,8 +1,8 @@
 <div class ="container">
   <div class = "card">
-      <h3 class="text-center bg-warning" >Lista de clientes</h3>
+      <h2 class="text-center bg-warning" >Lista de clientes</h2>
       <div class = "card-body">
-          <table class="table table-striped">
+          <table class="table table-striped table table-hover">
               <thead>
                   <th>Id</th>
                   <th> CIF</th>
@@ -26,24 +26,27 @@
                       <td> {{ cliente.dni}}</td>
                       <td> {{ cliente.direccionFiscal}}</td>
                       <td> {{ cliente.comercial}}</td>
-                      <td> <button [routerLink]="['/cardio/menuPrincipal/espacios']" class="btn btn-warning">Ver espacios</button></td>
-                      <td> <button [routerLink]="['/cardio/menuPrincipal/cursos']" class="btn btn-warning">Ver cursos</button></td>
+                      <td> <button  [routerLink]="['/cardio/menuPrincipal/espacios', cliente.id]" class="btn btn-warning">Ver espacios</button></td>
+                      <td> <button  [routerLink]="['/cardio/menuPrincipal/cursos', cliente.id]"  class="btn btn-warning">Ver cursos</button></td>
                       <td></td>
                       <td></td>
                       <td><button (click)="deleteCliente(cliente)" class="btn btn-danger">Delete</button></td>
-                      <td><button [routerLink]="['/cardio/menuPrincipal/clientes', cliente.id]" class="btn btn-secondary" >Update</button></td>
+                      <td><button [routerLink]="['/cardio/menuPrincipal/clientes/edit', cliente.id]" class="btn btn-secondary" >Update</button></td>
 
                    </tr >
 
 
                 </table>
-                <div class="grid text-center">
-                  <div class="g-col-4 g-col-md-10">
-                    <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
-                    <button [routerLink]="['/cardio/menuPrincipal/equipos/edit']" class="btn btn-success"   style="margin-left: 100px">Crear Cliente</button>
-                 </div>
-                </div>
+
               </div>
+              <div class="grid text-center">
+                <div class="g-col-4 g-col-md-10">
+                  <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
+                  <button [routerLink]="['/cardio/menuPrincipal/clientes/edit']" class="btn btn-success"   style="margin-left: 100px">Crear cliente</button>
+               </div>
+              </div>
+
             </div>
           </div>
+
 

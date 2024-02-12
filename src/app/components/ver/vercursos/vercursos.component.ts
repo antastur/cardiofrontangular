@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Curso } from 'src/app/shared/models/curso';
 import { CursosService } from 'src/app/shared/services/cursos.service';
 import {MatTableModule} from '@angular/material/table';
+import { Cliente } from 'src/app/shared/models/cliente';
+import { ClientesService } from 'src/app/shared/services/clientes.service';
 
 
 
@@ -21,25 +23,41 @@ import {MatTableModule} from '@angular/material/table';
 export class VercursosComponent implements OnInit {
 
 
-
+  cliente!: Cliente;
    //Declaracion de variables
    cursos!: Curso[];
 
 
 
    //Constructor
-  constructor(public cursoService: CursosService,private router: Router){}
+  constructor(public clienteServicio: ClientesService,public cursoService: CursosService,private router: Router,private activatedRoute: ActivatedRoute){}
 
    ngOnInit(): void {
-     //se cargan todos los cursos de BD
-     this.reloadData();
+
+
+    this.cliente=new Cliente();
+
+    this.cargar();
    }
 
 
 
- reloadData(){
-    this.cursoService.getCursos().subscribe(e=>this.cursos=e);
-  }
+   cargar():void{
+    this.activatedRoute.params.subscribe(
+      a=>{
+        let id=a['id'];
+        if(id){
+          this.clienteServicio.getCursosUnCliente(id).subscribe(
+
+             as=>this.cursos=as
+          );
+          this.clienteServicio.getCliente(id).subscribe(
+            as=>this.cliente=as
+          );
+        }
+      })}
+
+
 
 
 //Metodo para borrar un curso de BD

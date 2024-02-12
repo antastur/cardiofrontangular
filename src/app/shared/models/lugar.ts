@@ -6,4 +6,9 @@ export class Lugar {
   ubicacion!: string;
   equipo!: Equipo;
   espacio!: Espacio;
+  marca!: string;
+  modelo!: string;
+  matricula!: string;
+  telefono!: string;
+  dtype!:string;
 }

@@ -1,16 +1,24 @@
 
     <div class ="container">
       <div class = "card  pad" >
-          <h2 class="card-title bg-warning text-center mb-30 ">INTRODUCE DATOS</h2>
+          <h2 class="card-title bg-warning text-center mb-30 ">INTRODUCE DATOS CLIENTE</h2>
           <div class = "card-body">
 
           <form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-3 "  id="formul">
 
+                <div *ngIf=" marcador; else pir">
+                <div class= "mb-10" >
+                  <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">CIF</label>
+                  <input  disabled type="text" class="form-control" name="cif" [(ngModel)]="cliente.cif"  id="autoSizingInput" placeholder="{{cliente.cif}}">
+                </div>
+              </div>
 
+              <ng-template #pir>
                 <div class= "mb-10" >
                   <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">CIF</label>
                   <input type="text" class="form-control" name="cif" [(ngModel)]="cliente.cif"  id="autoSizingInput" placeholder="{{cliente.cif}}">
                 </div>
+              </ng-template>
 
                 <div class="mb-10">
                   <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Nombre Empresa</label>
@@ -44,24 +52,12 @@
                   <input type="text" class="form-control" name="comercial" [(ngModel)]="cliente.comercial"  id="autoSizingInput" placeholder="{{cliente.comercial}}">
                 </div>
 
-                <div class="mb-10" >
-                  <label   style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Comercial asignado</label>
-                  <input type="text" class="form-control" name="comercial" [(ngModel)]="cliente.comercial"  id="autoSizingInput" placeholder="{{cliente.comercial}}">
-                </div>
+                <div ></div>
+
+                <div></div>
 
 
 
-               <div  *ngIf=" marcador; else val">
-                  <div class="mb10 text-center pad">
-                   <button type="submit" class="btn btn-secondary" (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar Cliente</button>
-                  </div>
-              </div>
-
-              <ng-template #val>
-                <div class="mb10 text-center pad">
-                  <button type="submit" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input">Crear Cliente</button>
-                </div>
-              </ng-template>
 
 <!--
 
@@ -76,38 +72,87 @@
 
   </div> -->
 
+             <div  *ngIf=" marcador; else per">
+
+
                 <div form-group-row class="col-auto ">
-                  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignar un equipo a un espacio o modificar espacio</label>
+                  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Elige un espacio a crear o modificar</label>
                   <cdk-virtual-scroll-viewport itemSize="50">
                   <select form-group-row class="form-select" aria-label="Default select example"  id="autoSizingInput"  [(ngModel)]="espacio" name="espacio">
-                  <option selected [ngValue]="null">Elige espacio</option>
-                  <option  *cdkVirtualFor="let esp of espacioscli" [ngValue]="esp">
-                    {{esp.direccion}}
+                  <option selected [ngValue]="espacio" >Elige este para crear, otro para modificar</option>
+                  <option  *cdkVirtualFor="let espac of espacioscli" [ngValue]="espac">
+                    {{espac.direccion}}
                   </option>
                   </select>
                 </cdk-virtual-scroll-viewport>
 
                 <div class="mb10 text-center pad">
-                  <button type="submit" class="btn btn-success"(click)="IrAsignarEspacio()"  name="ir" id="autoSizing" value="Input" >Asignar equipo\Modificar Espacio</button>
+                  <button type="button" class="btn btn-success"(click)="IrAsignarEspacio()"  name="ir" id="autoSizing" value="Input" >Ir a crear/modificar Espacio</button>
                 </div>
                 </div>
 
+           </div>
 
-                <div form-group-row class="col-auto ">
-                  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignar un alumno a un curso o modificar curso</label>
+
+
+
+
+            <div  *ngIf=" marcador; else par">
+               <div form-group-row class="col-auto ">
+                  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Elige un curso a crear o modificar</label>
                  <cdk-virtual-scroll-viewport itemSize="50">
                   <select form-group-row class="form-select" aria-label="Default select example"  id="autoSizingInput"  [(ngModel)]="curso" name="curso">
-                  <option selected [ngValue]="null">Elige curso</option>
-                  <option  *ngFor="let curs of cursoscli" [ngValue]="curs">
+                  <option selected [ngValue]="curso" >Elige curso</option>
+                  <option  *cdkVirtualFor="let curs of cursoscli" [ngValue]="curs">
                     {{curs.id}}
                   </option>
                   </select>
                 </cdk-virtual-scroll-viewport>
 
                 <div class="mb10 text-center pad">
-                  <button type="submit" class="btn btn-success"(click)="IrAsignarCurso()"  name="ira" id="autoSizing" value="Input" >Asignar alumno\Modificar Curso</button>
+                  <button type="button" class="btn btn-success"(click)="IrAsignarCurso()"  name="ira" id="autoSizing" value="Input" >Ir a crear/modificar curso</button>
                 </div>
                 </div>
+            </div>
+
+
+
+              <ng-template #per>
+                <div></div>
+              </ng-template>
+              <ng-template #par>
+                <div></div>
+              </ng-template>
+
+
+        <div class="g-3">
+
+
+        <div class="mb10 text-center  ">
+          <button [routerLink]="['/cardio/menuPrincipal/clientes']" class="btn btn-warning" >Volver a ver clientes</button>
+        </div>
+
+
+
+        <div  *ngIf=" marcador; else val">
+          <div class="mb10 text-center  pad ">
+           <button type="button" class="btn btn-secondary" (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar Cliente</button>
+          </div>
+      </div>
+
+      <ng-template #val>
+        <div class="mb10 text-center  pad ">
+          <button type="button" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input">Crear Cliente</button>
+        </div>
+      </ng-template>
+
+
+
+      <div class="mb10 text-center  pad ">
+        <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
+      </div>
+    </div>
+
 
 
 

@@ -13,10 +13,17 @@ export class EquiposService {
 
   private baseUrl2 = "http://localhost:8080/cardio/menuPrincipal/clientes";
 
+  private baseUrl3 = "http://localhost:8080/cardio/menuPrincipal/equipos/asignados";
+
   constructor(private http: HttpClient) { }
 
   getEquipos(): Observable<Equipo[]>{
     return this.http.get<Equipo[]>(this.baseUrl);
+  }
+
+
+  getEquiposNoAsignados(): Observable<Equipo[]>{
+    return this.http.get<Equipo[]>(this.baseUrl3);
   }
 
 

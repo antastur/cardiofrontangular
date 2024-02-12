@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cliente } from 'src/app/shared/models/cliente';
 import { Equipo } from 'src/app/shared/models/equipo';
+import { Espacio } from 'src/app/shared/models/espacio';
+import { Lugar } from 'src/app/shared/models/lugar';
+import { Vehiculo } from 'src/app/shared/models/vehiculo';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { EquiposService } from 'src/app/shared/services/equipos.service';
 
@@ -11,13 +14,31 @@ import { EquiposService } from 'src/app/shared/services/equipos.service';
   styleUrls: ['./crearequipo.component.css']
 })
 export class CrearequipoComponent implements OnInit{
-
+  //
   //Equipo sobre el que trabajar
   selectedEquipo!: Equipo;
-   //para controlar una vista u otra
-   marcador!: Boolean;
-   clientes!: Cliente[];
-   cliente!: Cliente;
+  //Clientes a elegir
+  clientes!: Cliente[];
+  //Cliente al que asignar
+  selectedCliente!: Cliente
+  //Cliente elegido
+  cliente!: Cliente;
+  //Espacios a elegir
+  espacios!: Espacio[];
+  //Espacio elegido;
+  espacio!: Espacio;
+  //Lugares a elegir
+  lugares!: Lugar[];
+  //Lugar elegido
+  lugar!: Lugar;
+  //Vehiculos a elegir
+  vehiculos!: Vehiculo[];
+  //Vehiculo elegido
+  vehiculo!: Vehiculo;
+  //para controlar una vista u otra
+  marcador!: Boolean;
+
+
 
    //constructor
   constructor(public equiposService: EquiposService,public router: Router,private activatedRoute: ActivatedRoute) { }
@@ -25,9 +46,14 @@ export class CrearequipoComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.selectedEquipo=new Equipo();
     this.marcador=false;
+    this.selectedEquipo=new Equipo();
+    this.espacio=new Espacio();
+    this.lugar=new Lugar();
+    this.vehiculo=new Vehiculo();
     this.cliente=new Cliente();
+    this.espacios=[];
+
     this.cliente.id=0;
      //este metodo se encarga de delimitar si hay pathvariable y si es asi carga en
     //selectedEquipo el de ese id
@@ -55,10 +81,12 @@ export class CrearequipoComponent implements OnInit{
 }
 
   IrAsignarCliente(){
-    if(this.cliente.id>0){
+  /*  if(this.cliente.id>0){
       this.router.navigateByUrl('/cardio/menuPrincipal/clientes/edit/'+this.cliente.id);
 
-    }
+    }*/
+      this.espacios=this.cliente.espacios;
+
   }
 
   //Metodo que redirecciona a un equipo en particular o deja uno vacio
@@ -75,6 +103,7 @@ export class CrearequipoComponent implements OnInit{
                 a=>this.clientes=a );
               this.equiposService.getEquipo(id).subscribe(
               as=>this.selectedEquipo=as );
+
 
           //marcador para mostrar en vista boton crear equipo
            }else{

@@ -13,7 +13,7 @@ export class ClientesService {
 
   private baseUrl = "http://localhost:8080/cardio/menuPrincipal/clientes";
   private baseUrl2 = "http://localhost:8080/cardio/menuPrincipal/clientes/espacios";
-  private baseUrl3 = "http://localhost:8080/cardio/menuPrincipal/clientes/espacios";
+  private baseUrl3 = "http://localhost:8080/cardio/menuPrincipal/clientes/cursos";
 
   constructor(private http: HttpClient) { }
 

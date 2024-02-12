@@ -1,3 +1,4 @@
+import { CrearespacioComponent } from './components/crear/crearespacio/crearespacio.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -21,6 +22,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatTableModule} from '@angular/material/table';
+import { ConsultaEquiposComponent } from './components/consultar/consultaEquipos/consultaEquipos.component';
+import { CrearlugarComponent } from './components/crear/crearlugar/crearlugar.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import {MatTableModule} from '@angular/material/table';
     CrearequipoComponent,
     CrearclienteComponent,
     CrearcursoComponent,
+    CrearespacioComponent,
     CreardiplomaComponent,
     VeralumnosComponent,
     VerequiposComponent,
@@ -38,6 +42,9 @@ import {MatTableModule} from '@angular/material/table';
     VerespaciosComponent,
     VervehiculosComponent,
     VerlugaresComponent,
+    CrearespacioComponent,
+    ConsultaEquiposComponent,
+    CrearlugarComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,7 @@ import {MatTableModule} from '@angular/material/table';
     FormsModule,
     BrowserAnimationsModule,
     ScrollingModule,
-    MatTableModule
+    MatTableModule,
 
   ],
   providers: [],

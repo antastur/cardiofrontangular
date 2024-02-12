@@ -1,0 +1,159 @@
+
+
+<!-- <div; class ="container"> -->
+ <!-- <div; class = "card"> -->
+
+ <div class= "card pad">
+
+    <h2 class="text-center bg-warning">Consulta de equipos</h2>
+                  <div class= "card pad text-center ">
+                    <table class="table ">
+
+                      <thead>
+                        <tr>
+                          <th scope="col">Stock total</th>
+                          <th scope="col">Stock equipos disponibles</th>
+                          <th scope="col">Stock cabinas de exterior</th>
+                          <th scope="col">Stock de equipos usados</th>
+                          <th scope="col" >Stock de equipos con caducidad inferior a 1 año</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+
+                              <td> {{ equipos.length}} </td>
+                              <td> {{ equipos.length}}</td>
+                              <td> {{ equipos.length}}</td>
+                              <td> {{ equipos.length}}</td>
+                              <td> {{ equipos.length}}</td>
+
+                        </tbody>
+                      </table>
+
+                  </div >
+
+
+
+
+                  <div class="card pad ">
+                      <form class="mt-1 ms-1 me-1 row row-cols-lg-5 g-3 "  id="formul">
+
+                    <div class="mb10 ">
+                        <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos</label>
+
+                        <cdk-virtual-scroll-viewport itemSize="200" >
+                            <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
+                              <option [ngValue]="null">         Elige un equipo       </option>
+                              <option *cdkVirtualFor="let equip of equipos"  [ngValue]="equip">{{equip.numSerie}}</option>
+                            </select>
+                          </cdk-virtual-scroll-viewport>
+                            <div class="mb10 ">
+                              <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
+                            </div>
+
+
+                    </div>
+
+<!--
+
+                    <div class="mb10 ">
+                      <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos disponibles</label>
+
+                      <cdk-virtual-scroll-viewport itemSize="200" >
+                          <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
+                            <option [ngValue]="null">         Elige un equipo       </option>
+                            <option *cdkVirtualFor="let equip of equiposDisp"  [ngValue]="equip">{{equip.numSerie}}</option>
+                          </select>
+                        </cdk-virtual-scroll-viewport>
+                          <div class="mb10 ">
+                            <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
+                          </div>
+
+
+                  </div>
+
+
+
+                  <div class="mb10 ">
+                    <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos equipos de exterior</label>
+
+                    <cdk-virtual-scroll-viewport itemSize="200" >
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
+                          <option [ngValue]="null">         Elige un equipo       </option>
+                          <option *cdkVirtualFor="let equip of equiposExt"  [ngValue]="equip">{{equip.numSerie}}</option>
+                        </select>
+                      </cdk-virtual-scroll-viewport>
+                        <div class="mb10 ">
+                          <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
+                        </div>
+
+
+                </div>
+
+
+
+                <div class="mb10 ">
+                  <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos equipos usados</label>
+
+                  <cdk-virtual-scroll-viewport itemSize="200" >
+                      <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
+                        <option [ngValue]="null">         Elige un equipo       </option>
+                        <option *cdkVirtualFor="let equip of equiposUsad"  [ngValue]="equip">{{equip.numSerie}}</option>
+                      </select>
+                    </cdk-virtual-scroll-viewport>
+                      <div class="mb10 ">
+                        <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
+                      </div>
+
+
+              </div>
+
+
+
+              <div class="mb10 ">
+                <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos equipos caducos en 1 año</label>
+
+                <cdk-virtual-scroll-viewport itemSize="200" >
+                    <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
+                      <option [ngValue]="null">         Elige un equipo       </option>
+                      <option *cdkVirtualFor="let equip of equiposCad"  [ngValue]="equip">{{equip.numSerie}}</option>
+                    </select>
+                  </cdk-virtual-scroll-viewport>
+                    <div class="mb10 ">
+                      <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
+                    </div>
+
+
+            </div>
+
+
+
+<div></div>
+<div></div>
+
+
+
+-->
+
+
+
+
+
+
+                  </form>
+
+
+                  </div>
+                  <div class= "card pad text-center">
+                  <div class="mb10 ">
+                    <button type="submit" class="btn btn-warning" (click)="irMenuPrincipal()" name="ir" id="autoSizing" value="Input" >Ir a Menu Principal</button>
+                  </div>
+                  </div>
+      </div>
+
+
+
+
+
+

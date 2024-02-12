@@ -8,11 +8,11 @@
   </head>
   <body>
     <div class ="container">
-      <div class = "card  pad" >
-          <h2 class="card-title bg-warning text-center mb-30 ">INTRODUCE DATOS</h2>
+      <div class = "card" >
+          <h2 class="card-title bg-warning text-center mb-30">INTRODUCE DATOS DE EQUIPO</h2>
           <div class = "card-body">
 
-<form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-3 "  id="formul">
+<form class="mt-1 ms-1 me-1 row row-cols-lg-3  "  id="formul">
 
 
   <div class= "mb-10" >
@@ -87,7 +87,7 @@
   </div>
 
 
-<div class="row g-3 " >
+<div class="row g-2 " >
   <div class="col-4">
   <div class="form-check form-check-inline">
   <input class="form-check-input" type="checkbox" id="inlineCheckbox1"  name="condicionUsado" [(ngModel)]="selectedEquipo.condicionUsado" >
@@ -114,6 +114,73 @@
 
 
 
+<div class="mb10 g-2">
+  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un cliente</label>
+  <cdk-virtual-scroll-viewport itemSize="50">
+    <select class="form-select" aria-label="Asignar"  [(ngModel)]="cliente" name="cliente">
+    <!-- <option [ngValue]="null">Asignalo a un cliente</option> -->
+      <option *cdkVirtualFor="let client of clientes" [ngValue]="client"> {{client.nombEmp}} </option>
+    </select>
+  </cdk-virtual-scroll-viewport>
+
+
+  <div class="mb10 text-center ">
+    <button type="button" class="btn btn-light"(click)="IrAsignarCliente()"  name="ir" id="autoSizing" value="Input" >Asignar a un Cliente</button>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="mb10 g-2">
+  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un espacio</label>
+  <cdk-virtual-scroll-viewport itemSize="50">
+    <select class="form-select" aria-label="Asignar"  [(ngModel)]="espacio" name="espacio">
+    <!-- <option [ngValue]="null">Asignalo a un cliente</option> -->
+      <option *cdkVirtualFor="let esp of espacios" [ngValue]="esp"> {{esp.direccion}} </option>
+    </select>
+  </cdk-virtual-scroll-viewport>
+
+
+  <div class="mb10 text-center ">
+    <button type="button" class="btn btn-light"(click)="IrAsignarCliente()"  name="ir" id="autoSizing" value="Input" >Asignar a un Espacio</button>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+<div class="mb10 g-2">
+  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un lugar</label>
+  <cdk-virtual-scroll-viewport itemSize="50">
+    <select class="form-select" aria-label="Asignar"  [(ngModel)]="lugar" name="lugar">
+    <!-- <option [ngValue]="null">Asignalo a un cliente</option> -->
+      <option *cdkVirtualFor="let lug of lugares" [ngValue]="lug"> {{lug.ubicacion}} </option>
+    </select>
+  </cdk-virtual-scroll-viewport>
+
+
+  <div class="mb10 text-center ">
+    <button type="button" class="btn btn-light" (click)="IrAsignarCliente()"  name="ir" id="autoSizing" value="Input" >Asignar a un lugar</button>
+  </div>
+
+
+
+</div>
+
+
 
 
 
@@ -121,7 +188,7 @@
 
         <div  *ngIf=" marcador; else val">
           <div class="mb10 text-center pad">
-            <button type="submit" class="btn btn-secondary" (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar Equipo</button>
+            <button type="button" class="btn btn-secondary" (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar Equipo</button>
           </div>
         </div>
 
@@ -134,31 +201,22 @@
         </div>
 
 
-        <div class="mb10 pad">
-          <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un cliente</label>
-          <cdk-virtual-scroll-viewport itemSize="50">
-            <select class="form-select" aria-label="Asignar"  [(ngModel)]="cliente" name="cliente">
-            <!-- <option [ngValue]="null">Asignalo a un cliente</option> -->
-              <option *cdkVirtualFor="let client of clientes" [ngValue]="client"> {{client.nombEmp}} </option>
-            </select>
-          </cdk-virtual-scroll-viewport>
-
-
-          <div class="mb10 text-center ">
-            <button type="submit" class="btn btn-success"(click)="IrAsignarCliente()"  name="ir" id="autoSizing" value="Input" >Asignar Cliente</button>
-          </div>
-
-
-        </div>
 
 
 
 
         <ng-template #val>
-          <div class="mb10 text-center">
-            <button type="submit" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input">Crear Equipo</button>
+          <div class="mb10 text-center pad">
+            <button type="button" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input">Crear Equipo</button>
           </div>
         </ng-template>
+
+
+
+        <div class="mb10 text-center pad" >
+          <button type="button" class="btn btn-success"  (click)="IrAsignarCliente()"  name="bot" id="autoSizing" value="Input">Registrar equipo en lugar asignado</button>
+        </div>
+
 
 
 </form>

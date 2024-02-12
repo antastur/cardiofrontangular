@@ -1,1 +1,48 @@
-<p>verespacios works!</p>
+<div class ="container">
+  <div class = "card">
+      <h2 class="text-center bg-warning" >Lista de espacios</h2>
+      <div class = "card-body">
+        <table class="table table-striped">
+              <thead>
+                  <th>Id</th>
+                  <th> Direccion</th>
+                  <th>Horario</th>
+                  <th>Num teléfono</th>
+                  <th>Email</th>
+                  <th>Fecha registro DGA</th>
+
+               </thead>
+              <tbody>
+                  <tr *ngFor = "let espacio of espacios">
+
+                      <td> {{ espacio.id}}</td>
+                      <td> {{ espacio.direccion}}</td>
+                      <td> {{ espacio.horario}}</td>
+                      <td> {{ espacio.numTelef}}</td>
+                      <td> {{ espacio.email}}</td>
+                      <td> {{ espacio.fechRegDga}}</td>
+
+                      <td> <button [routerLink]="['/cardio/menuPrincipal/lugares/'+espacio.id]" class="btn btn-warning">Ver lugares</button></td>
+
+                      <td></td>
+                      <td></td>
+
+
+                   </tr >
+
+
+                </table>
+                <div class="grid text-center">
+                  <div class="g-col-4 g-col-md-10">
+                    <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
+
+                    <button [routerLink]="['/cardio/menuPrincipal/clientes']" class="btn btn-warning"  style="margin-left: 100px">Volver a ver Clientes</button>
+                    <div class="col">
+
+                      </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+

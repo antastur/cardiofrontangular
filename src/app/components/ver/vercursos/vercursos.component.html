@@ -1,9 +1,29 @@
 
 <div class ="container">
   <div class = "card">
-      <h3 class="text-center bg-warning" >Lista de clientes</h3>
+      <h3 class="text-center bg-warning" >Lista de cursos</h3>
       <div class = "card-body">
 
+        <table class="table table-striped">
+          <thead>
+              <th>Id</th>
+              <th> Nombre</th>
+
+
+           </thead>
+          <tbody>
+              <tr *ngFor = "let curso of cursos">
+
+                  <td> {{ curso.id}}</td>
+                  <td> {{ curso.nombre}}</td>
+                  <td style="text-align:right"> <button [routerLink]="['/cardio/menuPrincipal/formaciones']" class="btn btn-warning">Ver formaciones</button></td>
+
+
+
+               </tr >
+
+
+            </table>
 
 
 
@@ -11,8 +31,9 @@
         <div class="grid text-center">
           <div class="g-col-4 g-col-md-10">
             <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
-            <button [routerLink]="['/cardio/menuPrincipal/equipos/edit']" class="btn btn-success"   style="margin-left: 100px">Crear Cliente</button>
-         </div>
+            <button [routerLink]="['/cardio/menuPrincipal/cursos/edit']" class="btn btn-success"   style="margin-left: 100px">Crear Curso</button>
+            <button [routerLink]="['/cardio/menuPrincipal/clientes']" class="btn btn-warning"  style="margin-left: 100px">Volver a ver clientes</button>
+          </div>
         </div>
       </div>
     </div>
