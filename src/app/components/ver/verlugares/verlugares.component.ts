@@ -23,7 +23,7 @@ export class VerlugaresComponent implements OnInit {
 
   lugares!: Lugar[];
   idCliente!: number;
-
+ //vehiculos!: Vehiculo[];
 
  //Constructor
  constructor(public $espaciosService: EspaciosService,public $idCliente: IdClienteparaespaciosService, private router: Router,private activatedRoute: ActivatedRoute){
@@ -46,6 +46,8 @@ cargar():void{
       let id=a['id'];
       if(id){
 
+       // this.$espaciosService.getVehiculosUnEspacio(id).subscribe(
+         // al => this.vehiculos = al).unsubscribe;
         this.$espaciosService.getLugaresUnEspacio(id).subscribe(
           al => this.lugares = al).unsubscribe;
 
@@ -94,5 +96,18 @@ deleteLugar(id: number){
 console.log("espacio "+this.espacioHijo.direccion);
 
 }
+/*
+crearVehiculo(){
+
+}
+
+updateVehiculo(id: number){
+
+}
+
+deleteVehiculo(id: number){
+
+}
+*/
 
 }

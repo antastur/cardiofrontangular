@@ -1,10 +1,10 @@
 <div class ="container">
   <div class = "card">
-      <h2 class="text-center bg-warning" >Lista de lugares y vehiculos</h2>
+      <h2 class="text-center bg-warning" >Lista de lugares</h2>
       <div class = "card-body">
           <table class="table table-striped table table-hover">
               <thead>
-                <th> Tipo</th>
+
                   <th> Ubicación</th>
                   <th> Espacio</th>
                   <th> Marca</th>
@@ -14,7 +14,7 @@
                   <th> Equipo</th>
                </thead>
               <tbody>
-                  <tr *ngFor = "let lugar of lugares">
+                 <tr *ngFor = "let lugar of lugares">
 
 
                       <td> {{ lugar.ubicacion}}</td>
@@ -39,7 +39,7 @@
 
                 <div class="grid text-center">
 
-                          <div class="g-col-4 g-col-md-10">
+                       <div class="g-col-4 g-col-md-10">
                             <div  *ngIf="!(marcadorHijo)">
                             <button (click)="volveraEspacio()"  class="btn btn-warning"  >Volver a Espacio</button>
                             <button (click)="volveraInicio()" class="btn btn-warning" style="margin-left: 100px">Volver a Inicio</button>

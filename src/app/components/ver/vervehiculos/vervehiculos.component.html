@@ -6,30 +6,43 @@
           <table class="table table-striped table table-hover">
               <thead>
                   <th>Id</th>
+                  <th> Ubicación</th>
+                  <th> Espacio</th>
                   <th> Marca</th>
                   <th> Modelo</th>
                   <th> Matricula</th>
                   <th> Teléfono</th>
+                  <th> Equipo</th>
                </thead>
               <tbody>
                   <tr *ngFor = "let vehic of vehiculos">
 
                       <td> {{ vehic.id}}</td>
+                      <td> {{ vehic.ubicacion}}</td>
+                      <td> {{ espacioHijo.direccion}}</td>
                       <td> {{ vehic.marca}}</td>
                       <td> {{ vehic.modelo}}</td>
                       <td> {{ vehic.matricula}}</td>
                       <td> {{ vehic.telefono}}</td>
+                      <td style="min-width: 100px" >{{vehic.equipo.numSerie}} </td>
+
+                      <div  *ngIf="marcadorHijo">
                       <td style="margin-right: 100px"><button (click)="asignarEquipo(equipoHijo)" class="btn btn-success">Asignar Equipo</button></td>
                       <td style="margin-right: 100px"><button (click)="asignarEquipo(equipoHijo)" class="btn btn-secondary">Modificar</button></td>
                       <td style="text-align:right"><button (click)="asignarEquipo(equipoHijo)" class="btn btn-danger">Delete</button></td>
-
+                      </div>
 
                    </tr >
 
 
                 </table>
                 <div class="grid text-center">
-
+                  <div class="g-col-4 g-col-md-10">
+                    <div  *ngIf="!(marcadorHijo)">
+                    <button (click)="volveraEspacio()"  class="btn btn-warning"  >Volver a Espacio</button>
+                    <button (click)="volveraInicio()" class="btn btn-warning" style="margin-left: 100px">Volver a Inicio</button>
+                  </div>
+        </div>
                 </div>
               </div>
             </div>

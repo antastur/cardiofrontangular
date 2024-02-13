@@ -7,10 +7,10 @@ export class Vehiculo extends Lugar {
   override ubicacion!: string;
   override equipo!: Equipo;
   override espacio!: Espacio;
-  override marca!: string;
-  override modelo!: string;
-  override matricula!: string;
-  override telefono!: string;
+   override marca!: string;
+   override modelo!: string;
+   override matricula!: string;
+   override telefono!: string;
 
 }
 

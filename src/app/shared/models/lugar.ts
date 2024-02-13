@@ -10,5 +10,5 @@ export class Lugar {
   modelo!: string;
   matricula!: string;
   telefono!: string;
-  dtype!:string;
+  //dtype!:string;
 }

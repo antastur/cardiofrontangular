@@ -78,34 +78,36 @@ guardar(){
   console.log("espacio "+this.espacio.direccion);
 
 
-  if (this.lugar.matricula){
+ // if (this.lugar){
 
 
-    console.log("vehiculo "+this.vehiculo.matricula);
-    this.$clienteid.getEquipoObservable().subscribe(a=>this.equipo=a).unsubscribe;
-    this.vehiculo.ubicacion=this.lugar.ubicacion;
+    //console.log("vehiculo "+this.vehiculo.matricula);
+   // this.$clienteid.getEquipoObservable().subscribe(a=>this.equipo=a).unsubscribe;
+   // this.vehiculo.ubicacion=this.lugar.ubicacion;
 
-    console.log("equipo "+this.equipo.numSerie);
-    this.vehiculo.marca=this.lugar.marca;
-    this.vehiculo.matricula=this.lugar.matricula;
-    this.vehiculo.modelo=this.lugar.modelo;
-    this.vehiculo.telefono=this.lugar.telefono;
+   // console.log("equipo "+this.equipo.numSerie);
+   // this.vehiculo.marca=this.lugar.marca;
+    //this.vehiculo.matricula=this.lugar.matricula;
+   // this.vehiculo.modelo=this.lugar.modelo;
+    //this.vehiculo.telefono=this.lugar.telefono;
    // this.vehiculo.equipo=this.equipo;
-   // this.vehiculo.espacio=this.espacio;
-   // this.$lugaresService.createLugar(this.lugar);
-    this.$vehiculoService.createVehiculo(this.vehiculo).subscribe();
-   this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
-  }else{
+    //this.vehiculo.espacio=this.espacio;
+    //this.$lugaresService.createLugar(this.lugar);
+    //this.$vehiculoService.createVehiculo(this.vehiculo).subscribe();
+   //this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+  //}else{
 
     this.$clienteid.getEquipoObservable().subscribe(a=>this.equipo=a).unsubscribe
-    console.log("vehiculo "+this.vehiculo.matricula);
+    console.log("espacio "+this.espacio.direccion);
     console.log("equipo "+this.equipo.numSerie);
     console.log("lugar "+this.lugar.ubicacion);
     this.lugar.equipo=this.equipo;
     this.lugar.espacio=this.espacio;
-    this.$lugaresService.createLugar(this.lugar).subscribe;
+    //console.log("lugar equipo "+this.lugar.equipo.numSerie);
+    //console.log("lugar espacio"+this.lugar.espacio.direccion);
+    this.$lugaresService.createLugar(this.lugar).subscribe();
     this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
-  }
+ // }
 
 }
 

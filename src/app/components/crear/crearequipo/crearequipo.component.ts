@@ -6,6 +6,7 @@ import { Espacio } from 'src/app/shared/models/espacio';
 import { Lugar } from 'src/app/shared/models/lugar';
 import { Vehiculo } from 'src/app/shared/models/vehiculo';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
+import { ClienteidService } from 'src/app/shared/services/data/clienteid.service';
 import { EquiposService } from 'src/app/shared/services/equipos.service';
 
 @Component({
@@ -41,7 +42,7 @@ export class CrearequipoComponent implements OnInit{
 
 
    //constructor
-  constructor(public equiposService: EquiposService,public router: Router,private activatedRoute: ActivatedRoute) { }
+  constructor(public $clienteid: ClienteidService,public equiposService: EquiposService,public router: Router,private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
@@ -50,7 +51,7 @@ export class CrearequipoComponent implements OnInit{
     this.selectedEquipo=new Equipo();
     this.espacio=new Espacio();
     this.lugar=new Lugar();
-    this.vehiculo=new Vehiculo();
+    this.lugares=[];
     this.cliente=new Cliente();
     this.espacios=[];
 
@@ -75,7 +76,7 @@ export class CrearequipoComponent implements OnInit{
 
 
     //Manda el equipo seteado a traves de la api
-    this.equiposService.update(this.selectedEquipo).subscribe();
+    this.equiposService.update(this.selectedEquipo).subscribe().unsubscribe;
 
    this.router.navigateByUrl('/cardio/menuPrincipal/equipos');
 }
@@ -85,7 +86,11 @@ export class CrearequipoComponent implements OnInit{
       this.router.navigateByUrl('/cardio/menuPrincipal/clientes/edit/'+this.cliente.id);
 
     }*/
-      this.espacios=this.cliente.espacios;
+    console.log("cliente "+ this.clientes[1].nombEmp);
+      this.espacios===this.cliente.espacios;
+      console.log("cliente "+this.cliente.nombEmp);
+      console.log("cliente "+this.cliente.espacios[0].direccion);
+
 
   }
 
@@ -101,6 +106,7 @@ export class CrearequipoComponent implements OnInit{
               this.marcador=true;
               this.equiposService.getClientes().subscribe(
                 a=>this.clientes=a );
+
               this.equiposService.getEquipo(id).subscribe(
               as=>this.selectedEquipo=as );
 

@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class CrearclienteComponent implements OnInit ,OnDestroy{
 
 
-   cliente2!: Cliente;
+
    //Espacio seleccionado
    espacio!: Espacio;
    //Array de Espacios
@@ -29,7 +29,7 @@ export class CrearclienteComponent implements OnInit ,OnDestroy{
    cliente!: Cliente;
    //para controlar una vista u otra
    marcador!: Boolean;
-   idCliente!: number;
+  // idCliente!: number;
    $clienteSubscription!: Subscription;
 
  //constructor
@@ -45,7 +45,6 @@ export class CrearclienteComponent implements OnInit ,OnDestroy{
 
 
     this.cliente=new Cliente();
-    this.cliente2=new Cliente();
     this.curso=new Curso();
     this.espacio=new Espacio();
     this.curso.nombre='';

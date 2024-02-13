@@ -114,6 +114,11 @@
 
 
 
+
+<div *ngIf="marcador">
+
+
+
 <div class="mb10 g-2">
   <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un cliente</label>
   <cdk-virtual-scroll-viewport itemSize="50">
@@ -132,68 +137,19 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-<div class="mb10 g-2">
-  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un espacio</label>
-  <cdk-virtual-scroll-viewport itemSize="50">
-    <select class="form-select" aria-label="Asignar"  [(ngModel)]="espacio" name="espacio">
-    <!-- <option [ngValue]="null">Asignalo a un cliente</option> -->
-      <option *cdkVirtualFor="let esp of espacios" [ngValue]="esp"> {{esp.direccion}} </option>
-    </select>
-  </cdk-virtual-scroll-viewport>
-
-
-  <div class="mb10 text-center ">
-    <button type="button" class="btn btn-light"(click)="IrAsignarCliente()"  name="ir" id="autoSizing" value="Input" >Asignar a un Espacio</button>
-  </div>
-
-
 </div>
 
 
 
+<div  *ngIf=" marcador; else val">
 
-
-
-<div class="mb10 g-2">
-  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un lugar</label>
-  <cdk-virtual-scroll-viewport itemSize="50">
-    <select class="form-select" aria-label="Asignar"  [(ngModel)]="lugar" name="lugar">
-    <!-- <option [ngValue]="null">Asignalo a un cliente</option> -->
-      <option *cdkVirtualFor="let lug of lugares" [ngValue]="lug"> {{lug.ubicacion}} </option>
-    </select>
-  </cdk-virtual-scroll-viewport>
-
-
-  <div class="mb10 text-center ">
-    <button type="button" class="btn btn-light" (click)="IrAsignarCliente()"  name="ir" id="autoSizing" value="Input" >Asignar a un lugar</button>
-  </div>
-
-
-
-</div>
-
-
-
-
-
-
-
-        <div  *ngIf=" marcador; else val">
-          <div class="mb10 text-center pad">
-            <button type="button" class="btn btn-secondary" (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar Equipo</button>
-          </div>
+        <div class="mb10 text-center pad">
+          <button type="button" class="btn btn-secondary" (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar Equipo</button>
         </div>
 
 
 
+      </div>
 
 
         <div class="mb10 text-center pad">
@@ -213,9 +169,6 @@
 
 
 
-        <div class="mb10 text-center pad" >
-          <button type="button" class="btn btn-success"  (click)="IrAsignarCliente()"  name="bot" id="autoSizing" value="Input">Registrar equipo en lugar asignado</button>
-        </div>
 
 
 
