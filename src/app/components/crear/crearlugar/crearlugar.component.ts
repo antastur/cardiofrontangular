@@ -73,29 +73,11 @@ export class CrearlugarComponent implements OnInit {
 
 guardar(){
 
-  console.log("espacio "+this.espacio.direccion);
+
   console.log("cliente "+this.cliente.nombEmp);
   console.log("espacio "+this.espacio.direccion);
 
 
- // if (this.lugar){
-
-
-    //console.log("vehiculo "+this.vehiculo.matricula);
-   // this.$clienteid.getEquipoObservable().subscribe(a=>this.equipo=a).unsubscribe;
-   // this.vehiculo.ubicacion=this.lugar.ubicacion;
-
-   // console.log("equipo "+this.equipo.numSerie);
-   // this.vehiculo.marca=this.lugar.marca;
-    //this.vehiculo.matricula=this.lugar.matricula;
-   // this.vehiculo.modelo=this.lugar.modelo;
-    //this.vehiculo.telefono=this.lugar.telefono;
-   // this.vehiculo.equipo=this.equipo;
-    //this.vehiculo.espacio=this.espacio;
-    //this.$lugaresService.createLugar(this.lugar);
-    //this.$vehiculoService.createVehiculo(this.vehiculo).subscribe();
-   //this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
-  //}else{
 
     this.$clienteid.getEquipoObservable().subscribe(a=>this.equipo=a).unsubscribe
     console.log("espacio "+this.espacio.direccion);
