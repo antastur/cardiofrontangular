@@ -22,7 +22,7 @@ export class VerequiposComponent implements OnInit{
      this.reloadData();
   }
 
-
+  //Metodo para ejecutar en el inicio de la app y traer todos los equipos de la BD
   reloadData(){
     this.equiposServicio.getEquipos().subscribe(e=>this.equipos=e);
   }
