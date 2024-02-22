@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './menuprincipal.component.html',
   styleUrls: ['./menuprincipal.component.css']
 })
+
+
+//Componente que tan solo ofrece enlaces en su vista a distintas partes de la app
 export class MenuprincipalComponent implements OnInit{
 
   constructor(private router: Router) { }
+
+
   ngOnInit(): void {
 
   }

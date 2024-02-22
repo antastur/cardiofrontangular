@@ -42,13 +42,7 @@
               <input   type="text" class="form-control" name="telefono" [(ngModel)]="lugar.telefono"  id="autoSizingInput" placeholder="{{lugar.telefono}}">
             </div>
 
-
-
-
 </div>
-
-
-
 
 
 
@@ -65,19 +59,12 @@
 
 
 
-          <!-- <div *ngIf=" !marcador; else vol"> -->
+
               <div  class="mb-10" >
                 <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Matricula</label>
                 <input disabled type="text" class="form-control" name="matricula" [(ngModel)]="lugar.matricula"  id="autoSizingInput" placeholder="{{lugar.matricula}}">
               </div>
-          <!--  </div> -->
 
-<!--     <ng-template #vol >
-      <div class="mb-10">
-      <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Matricula</label>
-      <input type="text" class="form-control" name="matricula" [(ngModel)]="lugar.matricula"  id="autoSizingInput" placeholder="{{lugar.matricula}}">
-    </div>
-    </ng-template> -->
 
 
             <div *ngIf=" lugar.matricula; else mar">

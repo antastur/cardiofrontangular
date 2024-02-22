@@ -58,20 +58,6 @@
 
 
 
-
-<!--
-
-                <div class="mb10 pad">
-                  <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Asignalo a un espacio</label>
-                  <cdk-virtual-scroll-viewport itemSize="500">
-                    <select class="form-select" aria-label="Asignara"  [(ngModel)]="espacio" name="espacio">
-                     <option [ngValue]="null">Asignalo a un espacio</option>
-                      <option [ngValue]="esp" *cdkVirtualFor="let esp of espacioscli">{{esp.}}</option>
-                    </select>
-                  </cdk-virtual-scroll-viewport>
-
-  </div> -->
-
              <div  *ngIf=" marcador; else per">
 
 
@@ -152,9 +138,6 @@
         <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
       </div>
     </div>
-
-
-
 
 
 

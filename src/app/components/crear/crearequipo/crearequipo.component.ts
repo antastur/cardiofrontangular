@@ -10,6 +10,7 @@ import { EquiposService } from 'src/app/shared/services/equipos.service';
   templateUrl: './crearequipo.component.html',
   styleUrls: ['./crearequipo.component.css']
 })
+
 export class CrearequipoComponent implements OnInit{
 
   //Equipo sobre el que trabajar
@@ -26,10 +27,11 @@ export class CrearequipoComponent implements OnInit{
 
 
 
-   //constructor
+  //constructor
   constructor(public $clienteid: ClienteidService,public equiposService: EquiposService,public router: Router,private activatedRoute: ActivatedRoute) { }
 
 
+  //en Método OnInit se inician todas las variables a usar para crear o modificar un equipo
   ngOnInit(): void {
 
     //Se inicializan las variables
@@ -44,8 +46,8 @@ export class CrearequipoComponent implements OnInit{
 
 
 
-  //Metodo que guarda el equipo al que se han dado valores en BD
-  guardar():void{
+    //Metodo que guarda el equipo al que se han dado valores en BD
+    guardar():void{
 
     //Da la orden para mandar este equipo a traves de la api hacia el back
     this.equiposService.createEquipo(this.selectedEquipo).subscribe().unsubscribe;
@@ -64,6 +66,8 @@ export class CrearequipoComponent implements OnInit{
     //y vuelve a la pantalla de ver los equipos
     this.router.navigateByUrl('/cardio/menuPrincipal/equipos');
 }
+
+
 
 
     //Metodo para elegir guardar el equipo en un servicio de datos y enviar el programa a la
@@ -94,14 +98,12 @@ export class CrearequipoComponent implements OnInit{
               this.equiposService.getEquipo(id).subscribe(
               as=>this.selectedEquipo=as );
 
-
-          //marcador para mostrar en vista boton crear equipo
+           //marcador para mostrar en vista boton crear equipo
            }else{
             this.marcador=false;
             }
-          }
-        )
-}
+          })
+    }
 
 
 }
