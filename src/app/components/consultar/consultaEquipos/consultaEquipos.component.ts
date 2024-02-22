@@ -10,30 +10,40 @@ import { EquiposService } from 'src/app/shared/services/equipos.service';
 })
 export class ConsultaEquiposComponent implements OnInit {
 
+  //Equipo que se elige par ir a modificarlo
   equipoElegido!: Equipo;
-
-  equipos!: Equipo[];
-
+  //Lista de equipos totales
+  equiposTot!: Equipo[];
+//Lista de equipos disponibles
   equiposDisp!: Equipo[];
-
+ //Lista de equipos exteriores
   equiposExt!: Equipo[];
-
+ //Lista de equipos utilizados
   equiposUsad!: Equipo[];
-
+  //Lista de equipos que caducan en 1 año
   equiposCad!: Equipo[];
 
 
 
   //constructor
-  constructor(public equiposService: EquiposService,public router: Router,private activatedRoute: ActivatedRoute) { }
+  constructor(public equiposService: EquiposService,public router: Router,private activatedRoute: ActivatedRoute) {
+  }
 
 
   ngOnInit() {
 
+    this.equiposTot=[];
+    this.equiposDisp=[];
+    this.equiposExt=[];
+    this.equiposUsad=[];
+    this.equiposCad=[];
     this.equipoElegido=new Equipo();
-    this.equipoElegido.id=0;
-    this.equiposService.getEquipos().subscribe(e=>this.equipos=e);
-    console.log(this.equipos[0].fabricante)
+    this.equiposService.getEquipos().subscribe(e=>this.equiposTot=e);
+    this.equiposService.getEquiposNoAsignados().subscribe(e=>this.equiposDisp=e);
+    this.equiposService.getEquiposUsados().subscribe(e=>this.equiposUsad=e);
+    this.equiposService.getEquiposExterior().subscribe(e=>this.equiposExt=e);
+    this.equiposService.getEquiposCaducos().subscribe(e=>this.equiposCad=e);
+
   }
 
 

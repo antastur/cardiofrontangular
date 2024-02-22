@@ -15,6 +15,14 @@ export class EquiposService {
 
   private baseUrl3 = "http://localhost:8080/cardio/menuPrincipal/equipos/asignados";
 
+  private baseUrl4 = "http://localhost:8080/cardio/menuPrincipal/consultas/usados";
+
+  private baseUrl5 = "http://localhost:8080/cardio/menuPrincipal/consultas/exterior";
+
+  private baseUrl6 = "http://localhost:8080/cardio/menuPrincipal/consultas/caducidad";
+
+
+
   constructor(private http: HttpClient) { }
 
   getEquipos(): Observable<Equipo[]>{
@@ -27,12 +35,33 @@ export class EquiposService {
   }
 
 
-  getEquipo(id: number): Observable<Equipo>{
-    return this.http.get<Equipo>(this.baseUrl+'/'+id);
+  getEquiposUsados(): Observable<Equipo[]>{
+    return this.http.get<Equipo[]>(this.baseUrl4);
   }
 
 
-  createEquipo(equipo: Equipo) : Observable<Equipo>{
+  getEquiposExterior(): Observable<Equipo[]>{
+    return this.http.get<Equipo[]>(this.baseUrl5);
+  }
+
+  getEquiposCaducos(): Observable<Equipo[]>{
+    return this.http.get<Equipo[]>(this.baseUrl6);
+  }
+
+
+
+  getEquipo(id: number): Observable<Equipo>{
+    return this.http.get<Equipo>(this.baseUrl+'/'+id);
+
+  }
+
+
+  getClientes(): Observable<Cliente[]>{
+    return this.http.get<Cliente[]>(this.baseUrl2);
+  }
+
+
+ createEquipo(equipo: Equipo) : Observable<Equipo>{
 
     return this.http.post<Equipo>(`${this.baseUrl}`,equipo );  /* .pipe(
    tap({
@@ -51,13 +80,6 @@ export class EquiposService {
 
   deleteEquipo(id: number): Observable<Equipo>{
         return this.http.delete<Equipo>(this.baseUrl+'/'+id/*`${this.baseUrl}/${id}`*/)}
-
-
-
-  getClientes(): Observable<Cliente[]>{
-          return this.http.get<Cliente[]>(this.baseUrl2);
-        }
-
 
 
 

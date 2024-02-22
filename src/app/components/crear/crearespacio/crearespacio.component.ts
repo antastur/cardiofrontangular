@@ -76,7 +76,7 @@ export class CrearespacioComponent implements OnInit {
          this.marcador=true;
          this.marcadorCrearLugar=true;
         }else{
-          this.marcador=true;
+          this.marcador=false;
           this.marcador2=false;
           this.marcadorCrearLugar=false;
         }

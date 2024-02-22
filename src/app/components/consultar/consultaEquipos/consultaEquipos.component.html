@@ -22,11 +22,11 @@
 
 
 
-                              <td> {{ equipos.length}} </td>
-                              <td> {{ equipos.length}}</td>
-                              <td> {{ equipos.length}}</td>
-                              <td> {{ equipos.length}}</td>
-                              <td> {{ equipos.length}}</td>
+                              <td> {{ equiposTot.length}} </td>
+                              <td> {{ equiposDisp.length}}</td>
+                              <td> {{ equiposExt.length}}</td>
+                              <td> {{ equiposUsad.length}}</td>
+                              <td> {{ equiposCad.length}}</td>
 
                         </tbody>
                       </table>
@@ -42,12 +42,12 @@
                     <div class="mb10 ">
                         <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos</label>
 
-                        <cdk-virtual-scroll-viewport itemSize="200" >
+                  <!--     <cdk-virtual-scroll-viewport itemSize="200" >   -->
                             <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
                               <option [ngValue]="null">         Elige un equipo       </option>
-                              <option *cdkVirtualFor="let equip of equipos"  [ngValue]="equip">{{equip.numSerie}}</option>
+     <!--  *cdkVirtual  -->  <option  *ngFor="let equip of equiposTot"  [ngValue]="equip">{{equip.numSerie}}</option>
                             </select>
-                          </cdk-virtual-scroll-viewport>
+                      <!--       </cdk-virtual-scroll-viewport> -->
                             <div class="mb10 ">
                               <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
                             </div>
@@ -55,17 +55,17 @@
 
                     </div>
 
-<!--
+
 
                     <div class="mb10 ">
                       <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos disponibles</label>
 
-                      <cdk-virtual-scroll-viewport itemSize="200" >
+                    <!--     <cdk-virtual-scroll-viewport itemSize="200" >  -->
                           <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
                             <option [ngValue]="null">         Elige un equipo       </option>
-                            <option *cdkVirtualFor="let equip of equiposDisp"  [ngValue]="equip">{{equip.numSerie}}</option>
+      <!--*cdkVirtualFor --> <option *ngFor="let equip of equiposDisp"  [ngValue]="equip">{{equip.numSerie}}</option>
                           </select>
-                        </cdk-virtual-scroll-viewport>
+                     <!-- </cdk-virtual-scroll-viewport>  -->
                           <div class="mb10 ">
                             <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
                           </div>
@@ -78,12 +78,12 @@
                   <div class="mb10 ">
                     <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos equipos de exterior</label>
 
-                    <cdk-virtual-scroll-viewport itemSize="200" >
+
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
                           <option [ngValue]="null">         Elige un equipo       </option>
-                          <option *cdkVirtualFor="let equip of equiposExt"  [ngValue]="equip">{{equip.numSerie}}</option>
+                          <option *ngFor="let equip of equiposExt"  [ngValue]="equip">{{equip.numSerie}}</option>
                         </select>
-                      </cdk-virtual-scroll-viewport>
+
                         <div class="mb10 ">
                           <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
                         </div>
@@ -96,12 +96,12 @@
                 <div class="mb10 ">
                   <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos equipos usados</label>
 
-                  <cdk-virtual-scroll-viewport itemSize="200" >
+
                       <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
                         <option [ngValue]="null">         Elige un equipo       </option>
-                        <option *cdkVirtualFor="let equip of equiposUsad"  [ngValue]="equip">{{equip.numSerie}}</option>
+                        <option *ngFor="let equip of equiposUsad"  [ngValue]="equip">{{equip.numSerie}}</option>
                       </select>
-                    </cdk-virtual-scroll-viewport>
+
                       <div class="mb10 ">
                         <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
                       </div>
@@ -114,12 +114,12 @@
               <div class="mb10 ">
                 <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos equipos caducos en 1 año</label>
 
-                <cdk-virtual-scroll-viewport itemSize="200" >
+
                     <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
                       <option [ngValue]="null">         Elige un equipo       </option>
-                      <option *cdkVirtualFor="let equip of equiposCad"  [ngValue]="equip">{{equip.numSerie}}</option>
+                      <option *ngFor="let equip of equiposCad"  [ngValue]="equip">{{equip.numSerie}}</option>
                     </select>
-                  </cdk-virtual-scroll-viewport>
+
                     <div class="mb10 ">
                       <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
                     </div>
@@ -134,7 +134,7 @@
 
 
 
--->
+
 
 
 

@@ -5,7 +5,7 @@
 
       <form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-3 "  id="formul">
 
-          <div  *ngIf="marcador; else vol">
+          <div  *ngIf="!marcador; else vol">
             <div class= "mb-10" >
               <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Dirección</label>
               <input  type="text" class="form-control" name="direccion" [(ngModel)]="espacio.direccion"  id="autoSizingInput" placeholder="{{espacio.direccion}}">

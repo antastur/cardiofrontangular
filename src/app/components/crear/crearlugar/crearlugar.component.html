@@ -3,82 +3,160 @@
       <h2 class="card-title bg-warning text-center mb-30 ">INTRODUCE DATOS DEL LUGAR/VEHÍCULO</h2>
       <div class = "card-body">
 
-      <form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-3 "  id="formul">
- <div  *ngIf=" !marcador; else vel">
- <div  class="mb-10" >
-    <label  style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Ubicación</label>
-    <input disabled type="text" class="form-control" name="ubicacion" [(ngModel)]="lugar.ubicacion"  id="autoSizingInput" placeholder="{{lugar.ubicacion}}">
+
+        <form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-3 "  id="formul">
+
+
+ <div *ngIf=" marcador ; else vel">
+
+
+              <div  class="mb-10" >
+                  <label  style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Ubicación</label>
+                  <input  type="text" class="form-control" name="ubicacion" [(ngModel)]="lugar.ubicacion"  id="autoSizingInput" placeholder="{{lugar.ubicacion}}">
+              </div>
+
+
+              <div  class="mb-10" >
+                <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Matricula</label>
+                <input  type="text" class="form-control" name="matricula" [(ngModel)]="lugar.matricula"  id="autoSizingInput" placeholder="{{lugar.matricula}}">
+              </div>
+
+
+              <div class= "mb-10" >
+                <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Marca</label>
+                <input   type="text" class="form-control" name="marca" [(ngModel)]="lugar.marca"  id="autoSizingInput" placeholder="{{lugar.marca}}">
+                </div>
+
+
+
+              <div class="mb-10">
+                <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Modelo</label>
+                <input  type="text" class="form-control" name="modelo" [(ngModel)]="lugar.modelo"  id="autoSizingInput" placeholder="{{lugar.modelo}}">
+              </div>
+
+
+
+
+            <div class="mb-10" >
+              <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Num teléfono</label>
+              <input   type="text" class="form-control" name="telefono" [(ngModel)]="lugar.telefono"  id="autoSizingInput" placeholder="{{lugar.telefono}}">
+            </div>
+
+
+
+
 </div>
-</div>
-<ng-template #vel >
-  <div  class="mb-10" >
-    <label  style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Ubicación</label>
-    <input type="text" class="form-control" name="ubicacion" [(ngModel)]="lugar.ubicacion"  id="autoSizingInput" placeholder="{{lugar.ubicacion}}">
-  </div>
-  </ng-template>
-
-  <div class= "mb-10" >
-    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Marca</label>
-    <input type="text" class="form-control" name="marca" [(ngModel)]="vehiculo.marca"  id="autoSizingInput" placeholder="{{vehiculo.marca}}">
-  </div>
-
-  <div *ngIf=" !marcador; else vol">
-  <div  class="mb-10" >
-    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Matricula</label>
-    <input disabled type="text" class="form-control" name="matricula" [(ngModel)]="vehiculo.matricula"  id="autoSizingInput" placeholder="{{vehiculo.matricula}}">
-  </div>
-</div>
-
-  <ng-template #vol >
-    <div class="mb-10">
-    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Matricula</label>
-    <input type="text" class="form-control" name="matricula" [(ngModel)]="vehiculo.matricula"  id="autoSizingInput" placeholder="{{vehiculo.matricula}}">
-  </div>
-  </ng-template>
-
-
-
-  <div class="mb-10">
-    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Modelo</label>
-    <input type="text" class="form-control" name="modelo" [(ngModel)]="vehiculo.modelo"  id="autoSizingInput" placeholder="{{vehiculo.modelo}}">
-  </div>
-
-  <div class="mb-10" >
-    <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Num teléfono</label>
-    <input type="text" class="form-control" name="telefono" [(ngModel)]="vehiculo.telefono"  id="autoSizingInput" placeholder="{{vehiculo.telefono}}">
-  </div>
 
 
 
 
-    <div class="mb10 text-center  pad ">
-      <div  *ngIf=" !marcador; else val">
-     <button type="button" class="btn btn-secondary" (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar Lugar/Vehículo</button>
+
+
+<ng-template #vel>
+
+
+    <div  class="mb-10">
+
+            <div  class="mb-10" >
+              <label  style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Ubicación</label>
+              <input  disabled type="text" class="form-control" name="ubicacion" [(ngModel)]="lugar.ubicacion"  id="autoSizingInput" placeholder="{{lugar.ubicacion}}">
+            </div>
+
+
+
+
+          <!-- <div *ngIf=" !marcador; else vol"> -->
+              <div  class="mb-10" >
+                <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Matricula</label>
+                <input disabled type="text" class="form-control" name="matricula" [(ngModel)]="lugar.matricula"  id="autoSizingInput" placeholder="{{lugar.matricula}}">
+              </div>
+          <!--  </div> -->
+
+<!--     <ng-template #vol >
+      <div class="mb-10">
+      <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Matricula</label>
+      <input type="text" class="form-control" name="matricula" [(ngModel)]="lugar.matricula"  id="autoSizingInput" placeholder="{{lugar.matricula}}">
     </div>
-</div>
+    </ng-template> -->
 
-<ng-template #val>
 
-    <button type="button" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input">Crear Lugar/Vehículo</button>
+            <div *ngIf=" lugar.matricula; else mar">
+            <div class= "mb-10" >
+              <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Marca</label>
+              <input type="text" class="form-control" name="marca" [(ngModel)]="lugar.marca"  id="autoSizingInput" placeholder="{{lugar.marca}}">
+              </div>
+            </div>
+
+            <ng-template #mar>
+              <div class= "mb-10" >
+                <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Marca</label>
+                <input  disabled type="text" class="form-control" name="marca" [(ngModel)]="lugar.marca"  id="autoSizingInput" placeholder="{{lugar.marca}}">
+                </div>
+              </ng-template >
+
+
+
+
+              <div *ngIf=" lugar.matricula; else mod">
+              <div class="mb-10">
+              <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Modelo</label>
+              <input type="text" class="form-control" name="modelo" [(ngModel)]="lugar.modelo"  id="autoSizingInput" placeholder="{{lugar.modelo}}">
+              </div>
+              </div>
+
+
+              <ng-template #mod>
+                <div class="mb-10">
+                  <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Modelo</label>
+                  <input disabled  type="text" class="form-control" name="modelo" [(ngModel)]="lugar.modelo"  id="autoSizingInput" placeholder="{{lugar.modelo}}">
+                </div>
+              </ng-template >
+
+
+
+
+              <div class="mb-10" >
+                <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Num teléfono</label>
+                <input type="text" class="form-control" name="telefono" [(ngModel)]="lugar.telefono"  id="autoSizingInput" placeholder="{{lugar.telefono}}">
+              </div>
+
+
+    </div >
 
 </ng-template>
 
-<div class="mb10 text-center  pad ">
-  <button [routerLink]="['/cardio/menuPrincipal/espacios/edit/'+espacio.id]" class="btn btn-warning" >Volver a espacio</button>
-</div>
 
-<div class="mb10 text-center  pad ">
-  <button [routerLink]="['/cardio/menuPrincipal/clientes/edit/'+cliente.id]" class="btn btn-warning" >Volver a espacios</button>
-</div>
+              <div class="mb10 text-center  pad ">
+              <div  *ngIf=" !marcador; else val">
+               <button type="button" class="btn btn-secondary" (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar Lugar/Vehículo</button>
+              </div>
+               </div>
 
-<div class="mb10 text-center  pad ">
-  <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
-</div>
+                <ng-template #val>
 
-</form>
+                    <button type="button" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input">Crear Lugar/Vehículo</button>
+
+                </ng-template>
 
 
-</div>
+              <div class="mb10"></div>
+
+              <div class="mb10 text-center  pad ">
+                <button [routerLink]="['/cardio/menuPrincipal/espacios/edit/'+espacio.id]" class="btn btn-warning" >Volver a espacio</button>
+              </div>
+
+              <div class="mb10 text-center  pad ">
+                <button [routerLink]="['/cardio/menuPrincipal/clientes/edit/'+cliente.id]" class="btn btn-warning" >Volver a cliente</button>
+              </div>
+
+            <div class="mb10 text-center  pad ">
+              <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
+            </div>
+
+    </form>
+
+
+  </div>
 </div>
 </div>
 

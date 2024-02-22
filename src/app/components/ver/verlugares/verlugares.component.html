@@ -1,10 +1,10 @@
 <div class ="container">
   <div class = "card">
-      <h2 class="text-center bg-warning" >Lista de lugares</h2>
+      <h2 class="text-center bg-warning" >Lista de lugares y vehiculos</h2>
       <div class = "card-body">
           <table class="table table-striped table table-hover">
               <thead>
-
+                <th> Id</th>
                   <th> Ubicación</th>
                   <th> Espacio</th>
                   <th> Marca</th>
@@ -17,18 +17,26 @@
                  <tr *ngFor = "let lugar of lugares">
 
 
-                      <td> {{ lugar.ubicacion}}</td>
+                      <td> {{ lugar.id}}</td>
+                      <td>{{lugar.ubicacion}}</td>
                       <td> {{ espacioHijo.direccion}}</td>
                       <td> {{ lugar.marca}}</td>
                       <td> {{ lugar.modelo}}</td>
                       <td> {{ lugar.matricula}}</td>
                       <td> {{ lugar.telefono}}</td>
-                      <td style="min-width: 100px" >{{lugar.equipo.numSerie}} </td>
+                      <div style="min-width: 100px" *ngIf="!lugar.equipo; else val">
+                      <td  > Sin equipo</td>
+                      </div>
+                    <ng-template #val style="min-width: 100px">
+                      <div>
+                      <td  > {{lugar.equipo.numSerie}}</td>
+                    </div>
+                    </ng-template>
 
                      <div  *ngIf="marcadorHijo">
-                      <td ><button (click)="crearLugar()" class="btn btn-success">Asignar equipo</button></td>
-                      <td ><button (click)="updateLugar(lugar.id)" class="btn btn-secondary">Update</button></td>
-                      <td ><button (click)="deleteLugar(lugar.id)" class="btn btn-danger">Delete</button></td>
+                      <td ><button (click)="asignarEquipo(lugar)" class="btn btn-success">Asignar equipo</button></td>
+                      <td ><button  (click)="updateLugar(lugar)" class="btn btn-secondary">Update</button></td>
+                      <td ><button (click)="deleteLugar(lugar)"  class="btn btn-danger">Delete</button></td>
                      </div>
 
 

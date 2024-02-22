@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class LugaresService {
 
-  private baseUrl = "http://localhost:8080/cardio/menuPrincipal/lugares";
+private baseUrl = "http://localhost:8080/cardio/menuPrincipal/lugares";
 
 constructor(private http: HttpClient) { }
 

@@ -37,6 +37,7 @@ export class CrearlugarComponent implements OnInit {
     this.espacio=new Espacio();
     this.$clienteid.getEspacioObservable().subscribe(a=>this.espacio=a);
     this.equipo=new Equipo();
+    this.$clienteid.getEquipoObservable().subscribe(e=>this.equipo=e);
     this.cliente=new Cliente();
     this.$clienteid.getClienteObservable().subscribe(a=>this.cliente=a);
     this.cargar();
@@ -52,7 +53,7 @@ export class CrearlugarComponent implements OnInit {
 
         this.$lugaresService.getLugar(id).subscribe(ae => this.lugar = ae);
          // this.$espaciosService.getLugaresUnEspacio(id).subscribe(al => this.lugares = al);
-         this.$vehiculoService.getVehiculo(id).subscribe(a=>this.vehiculo=a);
+        // this.$vehiculoService.getVehiculo(id).subscribe(a=>this.vehiculo=a);
         this.marcador=false;
 
         }else{
@@ -72,34 +73,92 @@ export class CrearlugarComponent implements OnInit {
 
 
 guardar(){
-
-
-  console.log("cliente "+this.cliente.nombEmp);
-  console.log("espacio "+this.espacio.direccion);
+console.log("lugar "+this.lugar.matricula)
 
 
 
-    this.$clienteid.getEquipoObservable().subscribe(a=>this.equipo=a).unsubscribe
-    console.log("espacio "+this.espacio.direccion);
-    console.log("equipo "+this.equipo.numSerie);
-    console.log("lugar "+this.lugar.ubicacion);
-    this.lugar.equipo=this.equipo;
-    this.lugar.espacio=this.espacio;
-    //console.log("lugar equipo "+this.lugar.equipo.numSerie);
-    //console.log("lugar espacio"+this.lugar.espacio.direccion);
-    this.$lugaresService.createLugar(this.lugar).subscribe();
-    this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
- // }
 
-}
+              if(this.lugar.matricula){
+                this.vehiculo.id=this.lugar.id;
+                this.vehiculo.espacio=this.espacio;
+                this.vehiculo.marca=this.lugar.marca;
+                this.vehiculo.matricula=this.lugar.matricula;
+                this.vehiculo.modelo=this.lugar.modelo;
+                this.vehiculo.telefono=this.lugar.telefono;
+                this.vehiculo.ubicacion=this.lugar.ubicacion;
+                this.$vehiculoService.createVehiculo(this.vehiculo).subscribe().unsubscribe;
+                this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                }
+                if(!this.lugar.matricula){
+                  this.lugar.espacio=this.espacio;
+                  this.$lugaresService.createLugar(this.lugar).subscribe().unsubscribe;
+                  this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                   }
+
+ }
+
+
 
 
 update(){
-console.log("espacio "+this.espacio.direccion);
-//console.log("idCliente "+this.idClienteHijo);
-console.log("equipo "+this.equipo.numSerie);
-console.log("lugar "+ this.lugar.ubicacion);
 
+
+  console.log("equipo"+this.equipo.fabricante);
+  console.log("equipo"+this.equipo.asignado);
+  console.log("espacio"+this.espacio.direccion);
+  console.log("espacio"+this.espacio.cliente);
+
+  if(this.equipo.id){
+
+    this.equipo=this.lugar.equipo;
+    this.equipo.asignado=true;
+    this.$equiposService.update(this.equipo).subscribe().unsubscribe;
+
+    if(this.lugar.matricula){
+
+       // this.$equiposService.update(this.equipo);
+        this.vehiculo.equipo=this.equipo;
+        this.vehiculo.espacio=this.espacio;
+        this.vehiculo.marca=this.lugar.marca;
+        this.vehiculo.matricula=this.lugar.matricula;
+        this.vehiculo.modelo=this.lugar.modelo;
+        this.vehiculo.telefono=this.lugar.telefono;
+        this.vehiculo.ubicacion=this.lugar.ubicacion;
+        console.log("vehiculo "+this.vehiculo.id);
+        this.$vehiculoService.updateVehiculo(this.vehiculo).subscribe().unsubscribe;
+        this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+      }
+    if(!this.lugar.matricula){
+
+
+        this.lugar.equipo=this.equipo;
+        this.lugar.espacio=this.espacio;
+        this.$lugaresService.updateLugar(this.lugar).subscribe().unsubscribe;
+        this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+         }
+
+  }else{
+    console.log("espacio sin equipo"+this.espacio.direccion);
+    console.log("espacio sin equipo "+this.espacio.cliente);
+        if(this.lugar.matricula){
+
+          this.vehiculo.espacio=this.espacio;
+          this.vehiculo.marca=this.lugar.marca;
+          this.vehiculo.matricula=this.lugar.matricula;
+          this.vehiculo.modelo=this.lugar.modelo;
+          this.vehiculo.telefono=this.lugar.telefono;
+          this.vehiculo.ubicacion=this.lugar.ubicacion;
+          this.$vehiculoService.updateVehiculo(this.vehiculo).subscribe().unsubscribe;
+          this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+          }
+
+       if(!this.lugar.matricula){
+
+            this.lugar.espacio=this.espacio;
+            this.$lugaresService.updateLugar(this.lugar).subscribe().unsubscribe;
+            this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+             }
+   }
 }
 
 
