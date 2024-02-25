@@ -1,11 +1,13 @@
-import { ClienteidService } from './../../../shared/services/data/clienteid.service';
+import { ClienteidService } from '../../../shared/data/clienteid.service';
 import { ClientesService } from './../../../shared/services/clientes.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cliente } from 'src/app/shared/models/cliente';
 import { Espacio } from 'src/app/shared/models/espacio';
 import { Curso } from 'src/app/shared/models/curso';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-crearcliente',
@@ -13,7 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./crearcliente.component.css']
 })
 
-export class CrearclienteComponent implements OnInit ,OnDestroy{
+export class CrearclienteComponent implements OnInit{
 
    //Espacio seleccionado
    espacio!: Espacio;
@@ -27,15 +29,16 @@ export class CrearclienteComponent implements OnInit ,OnDestroy{
    cliente!: Cliente;
    //para controlar una vista u otra
    marcador!: Boolean;
-  //Objeto Subscription para en el método OnDestroy desactivar las subscripciones
-   $clienteSubscription!: Subscription;
+   //
+   subscripcion!: Subscription;
 
   //constructor
-   constructor(public $clienteId: ClienteidService,public $clientesService: ClientesService, public router: Router,private activatedRoute: ActivatedRoute) {
+   constructor(public $clienteId: ClienteidService,public $clientesService: ClientesService, public router: Router,private activatedRoute: ActivatedRoute,private toastrService: ToastrService) {
 
 
 
  }
+
 
  //en Método OnInit se inician todas las variables a usar,así como se llaman los servicios necesarios
  //para obtener de BD los distintos clientes
@@ -57,7 +60,7 @@ export class CrearclienteComponent implements OnInit ,OnDestroy{
   //Metodo que redirecciona a un cliente en particular o deja uno vacio
   cargar():void{
 
-    this.activatedRoute.params.subscribe(
+  this.subscripcion=this.activatedRoute.params.subscribe(
           a=>{
             let id=a['id'];
             if(id){
@@ -65,15 +68,16 @@ export class CrearclienteComponent implements OnInit ,OnDestroy{
               //y carga del cliente cuya id es marcada por el pathvariable y boton modificar cliente
 
               this.marcador=true;
-              this.$clienteSubscription=this.$clientesService.getCliente(id).subscribe(
+              this.subscripcion=this.$clientesService.getCliente(id).subscribe(
                 a=>{this.cliente=a;
                 //Carga con datos el servicio para mandar un cliente a otros componentes
                 this.$clienteId.setClienteObservable(a);
-                });
+                })
+
 
               //Se obtienen los espacios y cursos de un cliente con sus servicios y a la vez se subscribe esto al objeto Subscription
-              this.$clienteSubscription=this.$clientesService.getEspaciosUnCliente(id).subscribe(asa=>this.espacioscli=asa );
-              this.$clienteSubscription=this.$clientesService.getCursosUnCliente(id).subscribe(asa=>this.cursoscli=asa );
+              this.subscripcion=this.$clientesService.getEspaciosUnCliente(id).subscribe(asa=>this.espacioscli=asa );
+              this.subscripcion=this.$clientesService.getCursosUnCliente(id).subscribe(asa=>this.cursoscli=asa );
 
 
                 //marcador para mostrar en vista boton crear cliente
@@ -91,8 +95,12 @@ export class CrearclienteComponent implements OnInit ,OnDestroy{
  guardar():void{
 
   //Da la orden para mandar este cliente a traves de la api hacia el back
-  this.$clienteSubscription=this.$clientesService.createCliente(this.cliente).subscribe();
+  this.subscripcion=this.$clientesService.createCliente(this.cliente).subscribe(()=>{
+
+  });
+  this.toastrService.success("Acción realizada");
   this.router.navigateByUrl('/cardio/menuPrincipal/clientes');
+
 }
 
 
@@ -101,9 +109,12 @@ export class CrearclienteComponent implements OnInit ,OnDestroy{
 update():void{
 
  //Manda el equipo seteado a traves de la api
-  this.$clienteSubscription=this.$clientesService.updateCliente(this.cliente).subscribe();
+  this.subscripcion=this.$clientesService.updateCliente(this.cliente).subscribe(()=>{
+    this.toastrService.success("Acción realizada");
+    this.router.navigateByUrl('/cardio/menuPrincipal/clientes');
+    });
 
-  this.router.navigateByUrl('/cardio/menuPrincipal/clientes');
+
 }
 
 
@@ -134,15 +145,11 @@ IrAsignarCurso(){
 
 }
 
-
-//Método que se ejecuta al salir del componente y cierra todas las subscripciones
+/*
 ngOnDestroy(): void {
- if(this.$clienteSubscription){
-  this.$clienteSubscription.unsubscribe();
- }
-
+ this.subscripcion.unsubscribe();
 }
 
-
+*/
 
 }

@@ -1,7 +1,9 @@
+
 import { CrearespacioComponent } from './components/crear/crearespacio/crearespacio.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuprincipalComponent } from './components/menuprincipal/menuprincipal.component';
@@ -15,15 +17,14 @@ import { VerclientesComponent } from './components/ver/verclientes/verclientes.c
 import { VercursosComponent } from './components/ver/vercursos/vercursos.component';
 import { VerformacionesComponent } from './components/ver/verformaciones/verformaciones.component';
 import { VerespaciosComponent } from './components/ver/verespacios/verespacios.component';
-import { VervehiculosComponent } from './components/ver/vervehiculos/vervehiculos.component';
 import { VerlugaresComponent } from './components/ver/verlugares/verlugares.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatTableModule} from '@angular/material/table';
 import { ConsultaEquiposComponent } from './components/consultar/consultaEquipos/consultaEquipos.component';
 import { CrearlugarComponent } from './components/crear/crearlugar/crearlugar.component';
+import {  HttpErrorInterceptorService } from './interceptors/HttpErrorInterceptor.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,6 @@ import { CrearlugarComponent } from './components/crear/crearlugar/crearlugar.co
     VercursosComponent,
     VerformacionesComponent,
     VerespaciosComponent,
-    VervehiculosComponent,
     VerlugaresComponent,
     CrearespacioComponent,
     ConsultaEquiposComponent,
@@ -54,9 +54,17 @@ import { CrearlugarComponent } from './components/crear/crearlugar/crearlugar.co
     BrowserAnimationsModule,
     ScrollingModule,
     MatTableModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
+
+
 
   ],
-  providers: [],
+  providers: [ {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpErrorInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,12 +1,11 @@
-import { ClienteidService } from './../../../shared/services/data/clienteid.service';
+import { ClienteidService } from '../../../shared/data/clienteid.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { Cliente } from 'src/app/shared/models/cliente';
 import { Equipo } from 'src/app/shared/models/equipo';
 import { Espacio } from 'src/app/shared/models/espacio';
 import { Lugar } from 'src/app/shared/models/lugar';
-import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { EquiposService } from 'src/app/shared/services/equipos.service';
 import { EspaciosService } from 'src/app/shared/services/espacios.service';
 
@@ -34,9 +33,11 @@ export class CrearespacioComponent implements OnInit {
   //Marcador para dehabilitar boton crear lugar
   marcadorCrearLugar:Boolean=true;
 
-  constructor(public $clienteId: ClienteidService, public $equiposService: EquiposService,  public $espaciosService: EspaciosService, public router: Router, private activatedRoute: ActivatedRoute) {
 
-  }
+  constructor(public $clienteId: ClienteidService, public $equiposService: EquiposService,
+      public $espaciosService: EspaciosService, public router: Router, private activatedRoute: ActivatedRoute,
+          private toastrService: ToastrService ) {
+ }
 
   //Metodo al abrir el componente que inicia variables y servicios necesarios para tratar la información del componente
   ngOnInit() {
@@ -49,6 +50,7 @@ export class CrearespacioComponent implements OnInit {
     //Obtención del cliente al que asignar el espacioque se crea y al que volver
     this.$clienteId.getClienteObservable().subscribe(a => this.cliente = a).unsubscribe;
     this.cargar();
+
    }
 
 
@@ -64,7 +66,7 @@ export class CrearespacioComponent implements OnInit {
             this.espacio = ae;
             this.$clienteId.setEspacioObservable(ae);
 
-          }  ).unsubscribe;
+          }  );
 
             //Gestión de la vista(crear o modificar)
             this.marcador=true;
@@ -83,14 +85,14 @@ export class CrearespacioComponent implements OnInit {
   guardar(): void {
 
     //persistencia del espacio en el que se está trabajando
-    if (this.espacio.direccion) {
+    if (!this.espacio.direccion===null) {
       //Se setea su cliente(que es el actual)
       this.espacio.cliente=this.cliente;
-      this.$espaciosService.createEspacio(this.espacio).subscribe().unsubscribe;
+      this.$espaciosService.createEspacio(this.espacio).subscribe(()=>{
+        this.toastrService.success("Accion realizada");
+      }).unsubscribe;
       this.router.navigateByUrl('/cardio/menuPrincipal/espacios/' + this.cliente.id);
 
-    } else {
-      console.log("Rellena como mínimo el campo direccion");
     }
 
   }
@@ -100,13 +102,16 @@ export class CrearespacioComponent implements OnInit {
   update(): void {
 
     if (this.espacio.direccion) {
-
+      console.log("true"+this.espacio.direccion);
       //Manda el equipo seteado a traves de la api
-      this.$espaciosService.updateEspacio(this.espacio).subscribe().unsubscribe;
+      this.$espaciosService.updateEspacio(this.espacio).subscribe(()=>{
+        this.toastrService.success("Accion realizada");
+      }).unsubscribe;
 
       this.router.navigateByUrl('/cardio/menuPrincipal/espacios/' + this.cliente.id);
     } else {
-      console.log("Rellena como mínimo el campo direccion");
+      console.log("true"+this.espacio.direccion);
+      this.toastrService.warning("Has de rellenar \n la ubicación como mínimo")
     }
 
   }
@@ -141,6 +146,23 @@ export class CrearespacioComponent implements OnInit {
   crearLugar() {
 
     this.router.navigateByUrl('/cardio/menuPrincipal/lugares/edit/');
+
+
+/*
+
+    //Metodo para borrar un equipo
+  deleteEspacio(espacio: Espacio):void{
+
+    console.log('borrado');
+    console.log(espacio.id);
+    this.$espacioServicio.deleteEspacio(espacio.id).subscribe(()=>{
+      this.toastrService.success("Acción realizada")})
+      .unsubscribe;
+      this.$clienteServicio.getEspaciosUnCliente(espacio.id).subscribe(
+        response=>this.espacios=response).unsubscribe;
+
+      }
+*/
 
 
 

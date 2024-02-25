@@ -1,22 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Cliente } from '../models/cliente';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { Espacio } from '../models/espacio';
 import { Curso } from '../models/curso';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ClientesService {
 
-
+  //Se crean constantes con los distintos endpoint que el servicio trabajará
   private baseUrl = "http://localhost:8080/cardio/menuPrincipal/clientes";
   private baseUrl2 = "http://localhost:8080/cardio/menuPrincipal/clientes/espacios";
   private baseUrl3 = "http://localhost:8080/cardio/menuPrincipal/clientes/cursos";
 
-  constructor(private http: HttpClient) { }
+  //Se instancia un observable para refrescar la vista cuando se ejecuten los metodos
+  private _refresh$=new Subject<void>();
 
+  //Se inyecta un HttpClient
+  constructor(private http: HttpClient,private toastrService: ToastrService) { }
+
+  //Metodo getter del observable
+  get refresh$(){
+    return this._refresh$;
+  }
+
+  //metodo que trae observables de lista de clientes desde el back
   getClientes(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.baseUrl);
   }
@@ -36,24 +48,36 @@ export class ClientesService {
 
   createCliente(cliente: Cliente): Observable<Cliente> {
 
-    return this.http.post<Cliente>(`${this.baseUrl}`, cliente);  /* .pipe(
- tap({
-      error: e => this.handlerror(e)
-    })) */
-  }
+    return this.http.post<Cliente>(`${this.baseUrl}`, cliente).pipe(
+      tap(()=>{
+          this._refresh$.next();
+      }
+          ))
+        }
 
 
   updateCliente(cliente: Cliente): Observable<Cliente> {
-    return this.http.put<Cliente>(`${this.baseUrl}/${cliente.id}`, cliente)/*.pipe(
-    tap({
-      error: e => this.handlerror(e)
-    })) */}
+
+    return this.http.put<Cliente>(`${this.baseUrl}/${cliente.id}`, cliente).pipe(
+      tap(()=>{
+          this._refresh$.next();
+      }
+         ))}
 
 
 
   deleteCliente(id: number): Observable<Cliente> {
-    return this.http.delete<Cliente>(this.baseUrl + '/' + id/*`${this.baseUrl}/${id}`*/)
-  }
+
+    return this.http.delete<Cliente>(this.baseUrl + '/' + id/*`${this.baseUrl}/${id}`*/)//.pipe(
+     // tap(() =>{
+
+
+         // this._refresh$.next();
+
+
+      }
+       //  ))
+//  }
 
 
 

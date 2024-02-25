@@ -1,21 +1,23 @@
 import { LugaresService } from './../../../shared/services/lugares.service';
-import { IdClienteparaespaciosService } from './../../../shared/services/data/idClienteparaespacios.service';
+import { IdClienteparaespaciosService } from '../../../shared/data/idClienteparaespacios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EquiposService } from './../../../shared/services/equipos.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Equipo } from 'src/app/shared/models/equipo';
 import { Espacio } from 'src/app/shared/models/espacio';
 import { Lugar } from 'src/app/shared/models/lugar';
 import { EspaciosService } from 'src/app/shared/services/espacios.service';
 import { Vehiculo } from 'src/app/shared/models/vehiculo';
-import { ClienteidService } from 'src/app/shared/services/data/clienteid.service';
+import { ClienteidService } from 'src/app/shared/data/clienteid.service';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-verlugares',
   templateUrl: './verlugares.component.html',
   styleUrls: ['./verlugares.component.css']
 })
-export class VerlugaresComponent implements OnInit {
+export class VerlugaresComponent implements OnInit,OnDestroy {
 
   //@Input()lugaresHijo!: Lugar[];
   @Input()equipoHijo!: Equipo;
@@ -27,9 +29,12 @@ export class VerlugaresComponent implements OnInit {
   idCliente!: number;
   vehiculo!: Vehiculo;
   lugar!: Lugar;
+  subscription!: Subscription;
 
  //Constructor
- constructor(public $espaciosService: EspaciosService,public $idCliente: IdClienteparaespaciosService,public $clienteID: ClienteidService,public $lugaresService: LugaresService,public $equiposService: EquiposService, private router: Router,private activatedRoute: ActivatedRoute){
+ constructor(public $espaciosService: EspaciosService,public $idCliente: IdClienteparaespaciosService,public $clienteID: ClienteidService,
+                             public $lugaresService: LugaresService,public $equiposService: EquiposService,
+                                      private router: Router,private activatedRoute: ActivatedRoute,private toastrService: ToastrService){
 
  }
 
@@ -41,21 +46,21 @@ export class VerlugaresComponent implements OnInit {
     this.espacio=new Espacio();
     this.equipoHijo=new Equipo();
     this.espacioHijo=new Espacio();
-    this.$idCliente.getidCliente().subscribe(a=>this.idCliente=a).unsubscribe;
+    this.subscription=this.$idCliente.getidCliente().subscribe(a=>this.idCliente=a);
     this.cargar();
 }
 
 
 cargar():void{
-  this.activatedRoute.params.subscribe(
+  this.subscription=this.activatedRoute.params.subscribe(
     a=>{
       let id=a['id'];
       if(id){
 
        // this.$espaciosService.getVehiculosUnEspacio(id).subscribe(
          // al => this.vehiculos = al).unsubscribe;
-        this.$espaciosService.getLugaresUnEspacio(id).subscribe(
-         al => this.lugares = al).unsubscribe;
+        this.subscription=this.$espaciosService.getLugaresUnEspacio(id).subscribe(
+         al => this.lugares = al);
 
 
           /*  this.clienteServicio.getCliente(id).subscribe(
@@ -98,8 +103,9 @@ deleteLugar(lugar: Lugar){
     if(lugar.equipo){
     this.equipoHijo=lugar.equipo;
     this.equipoHijo.asignado=false;
-    this.$equiposService.update(this.equipoHijo).subscribe().unsubscribe;}
-    this.$lugaresService.deleteLugar(lugar.id).subscribe().unsubscribe;
+    this.subscription=this.$equiposService.update(this.equipoHijo).subscribe();}
+    this.subscription=this.$lugaresService.deleteLugar(lugar.id).subscribe(()=>{
+      this.toastrService.success("Acción realizada")});
     }
 
 
@@ -110,12 +116,12 @@ asignarEquipo(lugar: Lugar){
 
 
                             lugar.equipo.asignado=false;
-                            this.$equiposService.update(lugar.equipo).subscribe().unsubscribe;
+                            this.subscription=this.$equiposService.update(lugar.equipo).subscribe();
                             lugar.espacio=this.espacioHijo;
                             console.log("lugar.equipo "+lugar.equipo.marca)
                             lugar.equipo=this.lugar.equipo;
                             // console.log("lugar.equipo "+lugar.equipo.marca)
-                            this.$lugaresService.updateLugar(lugar).subscribe().unsubscribe;
+                            this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
                             this.$clienteID.setEquipoObservable(undefined);
 
                             this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/'+this.espacioHijo.id+'');
@@ -127,8 +133,8 @@ asignarEquipo(lugar: Lugar){
                             this.equipoHijo.asignado=true;
                             lugar.equipo=this.equipoHijo;
                             lugar.espacio=this.espacioHijo;
-                            this.$equiposService.update(lugar.equipo).subscribe().unsubscribe;
-                            this.$lugaresService.updateLugar(lugar).subscribe().unsubscribe;
+                            this.subscription=this.$equiposService.update(lugar.equipo).subscribe();
+                            this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
                             this.equipoHijo==null;
                             this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/'+this.espacioHijo.id+'');
 
@@ -146,6 +152,9 @@ asignarEquipo(lugar: Lugar){
 
 
 
+    ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+    }
 
 
 

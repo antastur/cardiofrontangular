@@ -31,7 +31,7 @@
                       <td></td>
                       <td></td>
                       <td><button (click)="deleteCliente(cliente)" class="btn btn-danger">Delete</button></td>
-                      <td><button [routerLink]="['/cardio/menuPrincipal/clientes/edit', cliente.id]" class="btn btn-secondary" >Update</button></td>
+                      <td><button (click)="irAUpdate(cliente.id)" class="btn btn-secondary" >Update</button></td>
 
                    </tr >
 
@@ -42,7 +42,7 @@
               <div class="grid text-center">
                 <div class="g-col-4 g-col-md-10">
                   <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
-                  <button [routerLink]="['/cardio/menuPrincipal/clientes/edit']" class="btn btn-success"   style="margin-left: 100px">Crear cliente</button>
+                  <button (click)="irACrear()" class="btn btn-success"   style="margin-left: 100px">Crear cliente</button>
                </div>
               </div>
 

@@ -1,12 +1,10 @@
-import { IdClienteparaespaciosService } from './../../../shared/services/data/idClienteparaespacios.service';
+import { IdClienteparaespaciosService } from '../../../shared/data/idClienteparaespacios.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Cliente } from 'src/app/shared/models/cliente';
 import { Espacio } from 'src/app/shared/models/espacio';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
-import { ClienteidService } from 'src/app/shared/services/data/clienteid.service';
-import { EspaciosService } from 'src/app/shared/services/espacios.service';
+
 
 @Component({
   selector: 'app-verespacios',
@@ -15,65 +13,46 @@ import { EspaciosService } from 'src/app/shared/services/espacios.service';
 })
 export class VerespaciosComponent implements OnInit,OnDestroy{
 
-  //cliente!: Cliente;
+  //Declaracion de la variable que tendra la lista de espacios de un cliente
   espacios!: Espacio[];
-  $espaciosSubscription!: Subscription;
+
+  subscription!: Subscription;
 
   //Constructor
-  constructor(/*public $clienteid: ClienteidService, */public $idCliente: IdClienteparaespaciosService, public $clienteServicio: ClientesService,private $espacioServicio: EspaciosService,private router: Router,private activatedRoute: ActivatedRoute){
+  constructor(public $idCliente: IdClienteparaespaciosService, public $clienteServicio: ClientesService,
+                private router: Router,private activatedRoute: ActivatedRoute){
+                 }
 
-
-  }
 
 
   ngOnInit(): void {
-      /*this.cliente=new Cliente();*/
       this.cargar();
-    /*  this.$espaciosSubscription=this.$clienteid.getClienteObservable().subscribe(a=>this.cliente=a);*/
-  }
+   }
 
-
+  //Metodo que redirecciona a un cliente en particular o deja uno vacio
   cargar():void{
-    this.activatedRoute.params.subscribe(
+    this.subscription= this.activatedRoute.params.subscribe(
       a=>{
         let id=a['id'];
         if(id){
+          //Se usa el parametro id de la url para guardar la id del cliente del que se buscan sus espacios
+              //se listan y se guarda en el servicio de datos para poder volver desde la vista de la lista de espacios
 
-          this.$espaciosSubscription=this.$clienteServicio.getEspaciosUnCliente(id).subscribe(
+         this.subscription= this.$clienteServicio.getEspaciosUnCliente(id).subscribe(
 
              as=>this.espacios=as
           );
 
-          this.$idCliente.setIdCliente(id);
-        /*  this.clienteServicio.getCliente(id).subscribe(
-            as=>this.cliente=as
-          ); */
+         this.$idCliente.setIdCliente(id);
+
         }
       })}
 
 
-
-  //Metodo para borrar un equipo
-  deleteEspacio(espacio: Espacio):void{
-
-    console.log('borrado');
-    console.log(espacio.id);
-    this.$espaciosSubscription=this.$espacioServicio.deleteEspacio(espacio.id).subscribe(
-      res =>this.$clienteServicio.getEspaciosUnCliente(espacio.id).subscribe(
-        response=>this.espacios=response
-      ));
-
-      }
-
-      probarIdCliente(){
-
-       /* console.log(this.cliente.nombEmp); */
-      }
-
-
       ngOnDestroy(): void {
-        this.$espaciosSubscription.unsubscribe;
+        this.subscription.unsubscribe();
       }
+
 
 
 }

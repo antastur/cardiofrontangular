@@ -1,9 +1,12 @@
+import { ClientesService } from './../../../shared/services/clientes.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cliente } from 'src/app/shared/models/cliente';
 import { Equipo } from 'src/app/shared/models/equipo';
-import { ClienteidService } from 'src/app/shared/services/data/clienteid.service';
+import { ClienteidService } from 'src/app/shared/data/clienteid.service';
 import { EquiposService } from 'src/app/shared/services/equipos.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-crearequipo',
@@ -27,14 +30,18 @@ export class CrearequipoComponent implements OnInit{
 
 
 
+
+
   //constructor
-  constructor(public $clienteid: ClienteidService,public equiposService: EquiposService,public router: Router,private activatedRoute: ActivatedRoute) { }
+  constructor(public $clienteid: ClienteidService,public equiposService: EquiposService,public clientesService: ClientesService,
+      public router: Router,private activatedRoute: ActivatedRoute,private toastrService: ToastrService) { }
 
 
   //en Método OnInit se inician todas las variables a usar para crear o modificar un equipo
   ngOnInit(): void {
 
     //Se inicializan las variables
+
     this.marcador=false;
     this.selectedEquipo=new Equipo();
     this.cliente=new Cliente();
@@ -50,7 +57,10 @@ export class CrearequipoComponent implements OnInit{
     guardar():void{
 
     //Da la orden para mandar este equipo a traves de la api hacia el back
-    this.equiposService.createEquipo(this.selectedEquipo).subscribe().unsubscribe;
+    this.equiposService.createEquipo(this.selectedEquipo).subscribe(()=>{
+      this.toastrService.success("Accion realizada");
+    }).unsubscribe
+
     //y vuelve a la pantalla de ver los equipos
     this.router.navigateByUrl('/cardio/menuPrincipal/equipos');
  }
@@ -62,7 +72,9 @@ export class CrearequipoComponent implements OnInit{
     update():void{
 
     //Manda el equipo seteado a traves de la api
-    this.equiposService.update(this.selectedEquipo).subscribe().unsubscribe;
+    this.equiposService.update(this.selectedEquipo).subscribe(()=>{
+      this.toastrService.success("Accion realizada");
+    }).unsubscribe
     //y vuelve a la pantalla de ver los equipos
     this.router.navigateByUrl('/cardio/menuPrincipal/equipos');
 }
@@ -92,17 +104,17 @@ export class CrearequipoComponent implements OnInit{
               //para mostrar en vista los datos anteriores del equipo a modificar
               //y carga del equipo cuya id es marcada por el pathvariable y boton modificar equipo
               this.marcador=true;
-              this.equiposService.getClientes().subscribe(
-                a=>this.clientes=a );
+              this.clientesService.getClientes().subscribe(
+                a=>this.clientes=a ).unsubscribe;
 
               this.equiposService.getEquipo(id).subscribe(
-              as=>this.selectedEquipo=as );
+              as=>this.selectedEquipo=as ).unsubscribe;
 
            //marcador para mostrar en vista boton crear equipo
            }else{
             this.marcador=false;
             }
-          })
+          }).unsubscribe
     }
 
 
