@@ -1,40 +1,93 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
+import { ErrorMessage } from 'src/app/shared/models/errormessage';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpErrorInterceptorService extends HttpErrorResponse {
 
-  constructor(private toastrService: ToastrService) { super(toastrService); }
+constructor(private toastrService: ToastrService) { super(toastrService); }
 
-  showSucess(texto: any,titulo: any){
-    this.toastrService.success(texto,titulo);
+
+
+errormessage!: ErrorMessage;
+
+/*
+intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+
+  return next.handle(request).pipe(
+    map((event: HttpEvent<any>) => {
+
+
+
+      let errorType="Error";
+      let errMsg="";
+
+      if (event instanceof HttpResponse) {
+
+            if (event.status==409 ){
+                   this.errormessage=event.body;
+                  errMsg=this.errormessage.message;
+                  this.toastrService.error(errMsg, errorType+event.status, { closeButton: true });
+                }
+
+                if (event.status==404 ){
+
+                  this.errormessage=event.body;
+                 errMsg=this.errormessage.message;
+                 this.toastrService.error(errMsg, errorType+event.status, { closeButton: true });
+               }
+
+               if (event.status==401 ){
+
+                this.errormessage=event.body;
+               errMsg=this.errormessage.message;
+               this.toastrService.error(errMsg, errorType+event.status, { closeButton: true });
+             }
+
+             if (event.status==400 ){
+
+              this.errormessage=event.body;
+             errMsg=this.errormessage.message;
+             this.toastrService.error(errMsg, errorType+event.status, { closeButton: true });
+           }
+
+           if (event.status==500 ){
+
+            this.errormessage=event.body;
+           errMsg=this.errormessage.message;
+           this.toastrService.error(errMsg, errorType+event.status, { closeButton: true });
+         }
+
+           }
+ return event;
+    }));
+
+
+
   }
 
 
- showError(texto: any,titulo: any){
-  this.toastrService.success(texto,titulo)
 }
+*/
 
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-     return next.handle(request).pipe(catchError((error: HttpErrorResponse) => {
+  return next.handle(request ).pipe(catchError((error: HttpErrorResponse) => {
 
-
-
-
-      let errMsg = 'Ops algo ha pasado';
+  let errMsg = 'Ops algo ha pasado';
 
       let errorType = 'Error';
 
 
 
 
-        if (error.status === 409) {
+        if (error.status=== 409) {
           errMsg = `${error.status}, "Acción no permitida"`;
           errorType = 'Conflicto con BD';
 
@@ -72,18 +125,30 @@ export class HttpErrorInterceptorService extends HttpErrorResponse {
             this.toastrService.error(errMsg, errorType, { closeButton: true });
          }
 
-         if (error.status === 200) {
-          errMsg = `${error.status}, "Accion realizada con éxito"`;
-          errorType = 'Enhorabuena';
-          this.toastrService.success(errMsg, errorType, { closeButton: true });
-         }
+
           return throwError(errMsg);
+  }));
+  }
+}
+
+
+
+
+
+
+   //let promiseResponse: Promise<Response>=fetch(request.url);
+
+ //  return next.handle(request).pipe(tap(()=>{
+
+  /*   promiseResponse.then(response=> {
+
+        let errortype="Error";
+        respuesta: HttpResponse<ErrorMessage>;
+        respuesta=response;
+        errMsg = `${response.body.}`
+      this.toastrService.error(errMsg, errortype, { closeButton: true });
+      })
+
     }));
-  }
 
-
-
-
-  }
-
-
+  }  */

@@ -5,6 +5,7 @@ import { Observable, Subject, tap } from 'rxjs';
 import { Espacio } from '../models/espacio';
 import { Curso } from '../models/curso';
 import { ToastrService } from 'ngx-toastr';
+import { ErrorMessage } from '../models/errormessage';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ClientesService {
   private _refresh$=new Subject<void>();
 
   //Se inyecta un HttpClient
-  constructor(private http: HttpClient,private toastrService: ToastrService) { }
+  constructor(private http: HttpClient) { }
 
   //Metodo getter del observable
   get refresh$(){
@@ -30,8 +31,7 @@ export class ClientesService {
 
   //metodo que trae observables de lista de clientes desde el back
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.baseUrl);
-  }
+    return this.http.get<Cliente[]>(this.baseUrl);}
 
 
   getCliente(id: number): Observable<Cliente> {
@@ -46,14 +46,18 @@ export class ClientesService {
     return this.http.get<Curso[]>(this.baseUrl3+'/'+id);
   }
 
-  createCliente(cliente: Cliente): Observable<Cliente> {
 
-    return this.http.post<Cliente>(`${this.baseUrl}`, cliente).pipe(
+  createCliente(cliente: Cliente): Observable<any> {
+
+    return this.http.post<Object>(`${this.baseUrl}`, cliente).pipe(
       tap(()=>{
           this._refresh$.next();
       }
           ))
         }
+
+
+
 
 
   updateCliente(cliente: Cliente): Observable<Cliente> {
@@ -68,16 +72,16 @@ export class ClientesService {
 
   deleteCliente(id: number): Observable<Cliente> {
 
-    return this.http.delete<Cliente>(this.baseUrl + '/' + id/*`${this.baseUrl}/${id}`*/)//.pipe(
-     // tap(() =>{
+    return this.http.delete<Cliente>(this.baseUrl + '/' + id/*`${this.baseUrl}/${id}`*/) /*.pipe(
+     tap(() =>{
+        this._refresh$.next();
 
 
-         // this._refresh$.next();
 
 
       }
-       //  ))
-//  }
+         )) */
+  }
 
 
 

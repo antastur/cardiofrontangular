@@ -19,6 +19,7 @@ export class VerequiposComponent implements OnInit{
   //Subscripcion para gestionar todas y cerrarlas al salir del componente
   subscription!: Subscription;
 
+
   //Constructor
   constructor(public equiposServicio: EquiposService,private router: Router,private toastrService: ToastrService){
 
@@ -27,36 +28,39 @@ export class VerequiposComponent implements OnInit{
 
    ngOnInit(): void {
      //se cargan todos los equipos de BD
-     this.subscription=this.reloadData();
+    this.reloadData();
   }
 
 
   //Metodo para ejecutar en el inicio de la app y traer todos los equipos de la BD
-  reloadData() :Subscription{
-    return this.equiposServicio.getEquipos().subscribe(e=>this.equipos=e);
+  reloadData() {
+   this.subscription=this.equiposServicio.getEquipos().subscribe(e=>this.equipos=e);
 }
 
 
-  //Metodo para borrar un equipo
-  deleteEquipo(equipo: Equipo):void{
+    //Metodo para borrar un equipo
+    deleteEquipo(equipo: Equipo):void{
     //Se ejecuta el metodo y en la subscripcion se actualizan los datos de la vista y se lanza mensaje de ok
-    this.equiposServicio.deleteEquipo(equipo.id).subscribe(()=>{
-      this.subscription=this.reloadData();
-       this.toastrService.success("Acción realizada")})
-      .unsubscribe();
+    this.subscription=this.equiposServicio.deleteEquipo(equipo.id).subscribe(()=>{
+    //Se fuerza el borrado del cliente en la vista
+    this.equipos=this.equipos.filter(a=> a !== equipo);
+    //SE lanza mensaje de accion
+     this.toastrService.success("Acción realizada")},
+      );
+  }
 
-     }
 
-
-  //Metodo para ir a pantalla de asignar cliente
+      //Metodo para ir a pantalla de asignar cliente
       irAsignar(equipo: Equipo):void{
 
         this.router.navigateByUrl('/cardio/menuPrincipal/espacios/'+equipo.id);
       }
 
+
+
       //Al salir del componente se cierran las subscripciones abiertas
       ngOnDestroy(): void {
-        this.subscription.unsubscribe;
+        this.subscription.unsubscribe();
       }
 
 

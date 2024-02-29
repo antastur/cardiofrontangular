@@ -101,11 +101,23 @@
 
 
 
+              <div *ngIf=" lugar.matricula; else mid">
+              <div class="mb-10" >
+                <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Num teléfono</label>
+                <input disabled type="text" class="form-control" name="telefono" [(ngModel)]="lugar.telefono"  id="autoSizingInput" placeholder="{{lugar.telefono}}">
+              </div>
+            </div>
 
+            <ng-template #mid>
               <div class="mb-10" >
                 <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Num teléfono</label>
                 <input type="text" class="form-control" name="telefono" [(ngModel)]="lugar.telefono"  id="autoSizingInput" placeholder="{{lugar.telefono}}">
               </div>
+            </ng-template >
+
+
+
+
 
 
     </div >

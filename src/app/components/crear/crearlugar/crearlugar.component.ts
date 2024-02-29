@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { LugaresService } from './../../../shared/services/lugares.service';
 import { Component, Input, OnInit } from '@angular/core';
@@ -27,10 +28,11 @@ export class CrearlugarComponent implements OnInit {
   cliente!: Cliente;
   espacio!: Espacio;
   equipo!: Equipo;
+  subscription!: Subscription;
 
   //Constructor inyectando servicios necesarios
-  constructor(public $clienteid: ClienteidService, public $equiposService: EquiposService, public $lugaresService: LugaresService,
-                public $vehiculoService: VehiculosService, public router: Router, private activatedRoute: ActivatedRoute,private toastrService: ToastrService) {
+  constructor(private $clienteid: ClienteidService, private $equiposService: EquiposService, private $lugaresService: LugaresService,
+    private $vehiculoService: VehiculosService, private router: Router, private activatedRoute: ActivatedRoute,private toastrService: ToastrService) {
  }
 
  //Método en el que se inician variables y servicios necesarios
@@ -39,13 +41,13 @@ export class CrearlugarComponent implements OnInit {
     this.vehiculo=new Vehiculo();
     this.espacio=new Espacio();
     //Se recupera el espacio guardado en el servicio de datos
-    this.$clienteid.getEspacioObservable().subscribe(a=>this.espacio=a).unsubscribe;
+    this.subscription=this.$clienteid.getEspacioObservable().subscribe(a=>this.espacio=a);
     this.equipo=new Equipo();
     //Se recupera el equipo guardado en el servicio de datos
-    this.$clienteid.getEquipoObservable().subscribe(e=>this.equipo=e).unsubscribe;
+   // this.subscription=this.$clienteid.getEquipoObservable().subscribe(e=>this.equipo=e);
     this.cliente=new Cliente();
     //Se recupera el cliente guardado en el servicio de datos
-    this.$clienteid.getClienteObservable().subscribe(a=>this.cliente=a).unsubscribe;
+    this.subscription=this.$clienteid.getClienteObservable().subscribe(a=>this.cliente=a);
     this.cargar();
   }
 
@@ -57,7 +59,8 @@ export class CrearlugarComponent implements OnInit {
         let id = a['id'];
         if (id) {
         //Obtención del lugar sobre el que se trabaja
-        this.$lugaresService.getLugar(id).subscribe(ae => this.lugar = ae).unsubscribe;
+        this.subscription=this.$lugaresService.getLugar(id).subscribe(ae => this.lugar = ae);
+        this.equipo=this.lugar.equipo;
         //Gestión de la vista con flags
         this.marcador=false;
 
@@ -66,16 +69,16 @@ export class CrearlugarComponent implements OnInit {
 
         }
       }
-    ).unsubscribe
+    )
   }
 
 
 //Método que persiste el lugar que se crea teniendo en cuenta si es lugar o vehiculo
 guardar(){
 
-
+              //Si en la vista se ha escrito matricula será vehiculo
               if(this.lugar.matricula){
-
+                    //Se setea el vehiculo con los datos del lugar(como tal se trata en la vista)
                     this.vehiculo.id=this.lugar.id;
                     this.vehiculo.espacio=this.espacio;
                     this.vehiculo.marca=this.lugar.marca;
@@ -83,49 +86,49 @@ guardar(){
                     this.vehiculo.modelo=this.lugar.modelo;
                     this.vehiculo.telefono=this.lugar.telefono;
                     this.vehiculo.ubicacion=this.lugar.ubicacion;
-                    this.$vehiculoService.createVehiculo(this.vehiculo).subscribe(()=>{
-                      this.toastrService.success("Accion realizada");
-                    }).unsubscribe
+                    //Se persiste ,da aviso y redirecciona CrearEspacio
+                    this.subscription=this.$vehiculoService.createVehiculo(this.vehiculo).subscribe(()=>{
+                    this.toastrService.success("Accion realizada");
                     this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
-                }
+                    });
 
+                }
+                //En caso de persistirse como lugar
                 if(!this.lugar.matricula){
                      this.lugar.espacio=this.espacio;
-                     this.$lugaresService.createLugar(this.lugar).subscribe(()=>{
+                     this.subscription=this.$lugaresService.createLugar(this.lugar).subscribe(()=>{
                       this.toastrService.success("Accion realizada");
-                    }).unsubscribe
-                     this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                      this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                    });
+
                    }
 
- }
+   }
 
 
 
 //Método que persiste el lugar que se modifica teniendo en cuenta si es lugar o vehiculo y si tiene equipo asignado o no
 update(){
 
-  if(this.equipo.id){
+  //Si el lugar tiene un equipo
+  if(this.equipo){
 
-    this.equipo=this.lugar.equipo;
+  /*  this.equipo=this.lugar.equipo;
     this.equipo.asignado=true;
-    this.$equiposService.update(this.equipo).subscribe(()=>{
-      this.toastrService.success("Accion realizada");
-    }).unsubscribe
+    this.subscription=this.$equiposService.update(this.equipo).subscribe(()=>{
+
+    }) */
 
             if(this.lugar.matricula){
 
 
-                this.vehiculo.equipo=this.equipo;
-                this.vehiculo.espacio=this.espacio;
-                this.vehiculo.marca=this.lugar.marca;
-                this.vehiculo.matricula=this.lugar.matricula;
-                this.vehiculo.modelo=this.lugar.modelo;
-                this.vehiculo.telefono=this.lugar.telefono;
-                this.vehiculo.ubicacion=this.lugar.ubicacion;
-                this.$vehiculoService.updateVehiculo(this.vehiculo).subscribe(()=>{
-                  this.toastrService.success("Accion realizada");
-                }).unsubscribe
+                this.lugar.equipo=this.equipo;
+                this.lugar.espacio=this.espacio;
+                this.subscription=this.$vehiculoService.updateVehiculo(this.lugar).subscribe(()=>{
+                this.toastrService.success("Accion realizada");
                 this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                });
+
               }
 
             if(!this.lugar.matricula){
@@ -133,41 +136,39 @@ update(){
 
                 this.lugar.equipo=this.equipo;
                 this.lugar.espacio=this.espacio;
-                this.$lugaresService.updateLugar(this.lugar).subscribe(()=>{
+                console.log("espacio"+this.espacio.direccion)
+                this.subscription=this.$lugaresService.updateLugar(this.lugar).subscribe(()=>{
                   this.toastrService.success("Accion realizada");
-                }).unsubscribe
-                this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                  this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                });
+
                 }
 
   }else{
 
-            if(this.lugar.matricula){
+         if(this.lugar.matricula){
 
-                this.vehiculo.espacio=this.espacio;
-                this.vehiculo.marca=this.lugar.marca;
-                this.vehiculo.matricula=this.lugar.matricula;
-                this.vehiculo.modelo=this.lugar.modelo;
-                this.vehiculo.telefono=this.lugar.telefono;
-                this.vehiculo.ubicacion=this.lugar.ubicacion;
-                this.$vehiculoService.updateVehiculo(this.vehiculo).subscribe(()=>{
-                  this.toastrService.success("Accion realizada");
-                }).unsubscribe
-                this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                this.lugar.espacio=this.espacio;
+                this.subscription=this.$vehiculoService.updateVehiculo(this.lugar).subscribe(()=>{
+                    this.toastrService.success("Accion realizada");
+                    this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                    });
+
                 }
 
             if(!this.lugar.matricula){
 
                   this.lugar.espacio=this.espacio;
-                  this.$lugaresService.updateLugar(this.lugar).subscribe(()=>{
+                  this.subscription=this.$lugaresService.updateLugar(this.lugar).subscribe(()=>{
                     this.toastrService.success("Accion realizada");
-                  }).unsubscribe
-                  this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
-                  }
+                    this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
+                  });
+
+                 // }
    }
 }
 
 
-
-
+}
 
 }

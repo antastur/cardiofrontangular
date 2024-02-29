@@ -1,3 +1,4 @@
+
 import { LugaresService } from './../../../shared/services/lugares.service';
 import { IdClienteparaespaciosService } from '../../../shared/data/idClienteparaespacios.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,33 +21,47 @@ import { Subscription } from 'rxjs';
 export class VerlugaresComponent implements OnInit,OnDestroy {
 
   //@Input()lugaresHijo!: Lugar[];
-  @Input()equipoHijo!: Equipo;
+
   @Input() espacioHijo!: Espacio;
+  desdeCrearEquipo!:Equipo;
   @Input() marcadorHijo!:Boolean;
+  marcador!: Boolean;
+  marcadorEquipo!: Boolean;
+  equipoSelected!: Equipo;
+  idEspacio!:number;
+  idCliente!: number;
   espacio!: Espacio;
   equipo!: Equipo;
+  equipos!: Equipo[];
   lugares!: Lugar[];
-  idCliente!: number;
   vehiculo!: Vehiculo;
   lugar!: Lugar;
   subscription!: Subscription;
 
+
+
+
  //Constructor
- constructor(public $espaciosService: EspaciosService,public $idCliente: IdClienteparaespaciosService,public $clienteID: ClienteidService,
-                             public $lugaresService: LugaresService,public $equiposService: EquiposService,
+ constructor(private $espaciosService: EspaciosService,private $idCliente: IdClienteparaespaciosService,private $clienteID: ClienteidService,
+              private $lugaresService: LugaresService,private $equiposService: EquiposService,
                                       private router: Router,private activatedRoute: ActivatedRoute,private toastrService: ToastrService){
 
  }
 
 
   ngOnInit(): void {
+    this.marcador=true;
+    this.ocultarVolver();
     this.lugar=new Lugar();
     this.vehiculo=new Vehiculo();
     this.equipo=new Equipo();
     this.espacio=new Espacio();
-    this.equipoHijo=new Equipo();
+    this.equipoSelected=new Equipo();
     this.espacioHijo=new Espacio();
-    this.subscription=this.$idCliente.getidCliente().subscribe(a=>this.idCliente=a);
+    this.desdeCrearEquipo=new Equipo;
+    this.marcadorEquipo=true;
+
+
     this.cargar();
 }
 
@@ -57,35 +72,39 @@ cargar():void{
       let id=a['id'];
       if(id){
 
-       // this.$espaciosService.getVehiculosUnEspacio(id).subscribe(
-         // al => this.vehiculos = al).unsubscribe;
+        this.idEspacio=id;
+        this.subscription=this.$idCliente.getidCliente().subscribe(a=>this.idCliente=a);
         this.subscription=this.$espaciosService.getLugaresUnEspacio(id).subscribe(
          al => this.lugares = al);
+         this.subscription=this.$clienteID.getEquipoObservable().subscribe(a=>this.desdeCrearEquipo=a);
+         this.getEquiposDisponibles();
+       }else{
 
-
-          /*  this.clienteServicio.getCliente(id).subscribe(
-          as=>this.cliente=as
-        ); */
-
-      }else{
-
-
-
-        /* this.$espaciosService.getEspacio(id).subscribe(a=>this.espacio=a);
-        this.$espaciosService.getLugaresUnEspacio(this.espacioHijo.id).subscribe(
-          al => this.lugares = al); */
       }
     })}
 
+
+
+
+ocultarVolver(){
+
+  if(this.marcadorHijo==true){
+    this.marcador==false;
+  }
+}
+
+
+
 volveraEspacio(){
-  this.marcadorHijo=false;
+
   this.router.navigateByUrl('/cardio/menuPrincipal/espacios/'+this.idCliente);
 
 }
 
 
+
 volveraInicio(){
-  this.marcadorHijo=false;
+
   this.router.navigateByUrl('/cardio/menuPrincipal');
 
 }
@@ -99,160 +118,114 @@ updateLugar(lugar: Lugar){
 
 
 
+
 deleteLugar(lugar: Lugar){
     if(lugar.equipo){
-    this.equipoHijo=lugar.equipo;
-    this.equipoHijo.asignado=false;
-    this.subscription=this.$equiposService.update(this.equipoHijo).subscribe();}
+    this.equipo=lugar.equipo;
+    this.equipo.asignado=false;
+    this.subscription=this.$equiposService.update(this.equipo).subscribe();}
     this.subscription=this.$lugaresService.deleteLugar(lugar.id).subscribe(()=>{
+      this.lugares=this.lugares.filter(a=> a !== lugar);
       this.toastrService.success("Acción realizada")});
-    }
+  }
+
+
 
 
 asignarEquipo(lugar: Lugar){
 
-                   if(lugar.equipo){
+  if(lugar.equipo){
+
+    lugar.equipo.asignado=false;
+    this.subscription=this.$equiposService.update(lugar.equipo).subscribe();
+    lugar.espacio=this.espacioHijo;
+    console.log("lugar.equipo "+lugar.equipo.marca)
+    lugar.equipo=this.lugar.equipo;
+    // console.log("lugar.equipo "+lugar.equipo.marca)
+    this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
+    this.$clienteID.setEquipoObservable(undefined);
+
+    this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/'+this.espacioHijo.id+'');
+} else {
+
+    if(this.equipoSelected.id){
 
 
+          this.equipoSelected.asignado=true;
+          lugar.equipo=this.equipoSelected;
+          lugar.espacio=this.espacioHijo;
+          this.subscription=this.$equiposService.update(lugar.equipo).subscribe(()=>{
+            this.equipoSelected==undefined;
+            this.subscription=this.$espaciosService.getLugaresUnEspacio(this.idEspacio).subscribe(
+              al => this.lugares = al);
+              this.getEquiposDisponibles();
+            });
+          this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
 
-                            lugar.equipo.asignado=false;
-                            this.subscription=this.$equiposService.update(lugar.equipo).subscribe();
-                            lugar.espacio=this.espacioHijo;
-                            console.log("lugar.equipo "+lugar.equipo.marca)
-                            lugar.equipo=this.lugar.equipo;
-                            // console.log("lugar.equipo "+lugar.equipo.marca)
-                            this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
-                            this.$clienteID.setEquipoObservable(undefined);
+    }else{
 
-                            this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/'+this.espacioHijo.id+'');
-                   } else {
-
-                        if(this.equipoHijo.id){
-
-
-                            this.equipoHijo.asignado=true;
-                            lugar.equipo=this.equipoHijo;
-                            lugar.espacio=this.espacioHijo;
-                            this.subscription=this.$equiposService.update(lugar.equipo).subscribe();
-                            this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
-                            this.equipoHijo==null;
-                            this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/'+this.espacioHijo.id+'');
-
-
-                         }else{
-
-                            console.log("Has de asignar un equipo");
-
-              }
-
-
-                    }
-
+    console.log("Has de asignar un equipo");
     }
+
+
+  if(this.desdeCrearEquipo.id){
+
+
+          this.desdeCrearEquipo.asignado=true;
+          lugar.equipo=this.desdeCrearEquipo;
+          lugar.espacio=this.espacioHijo;
+          this.subscription=this.$equiposService.update(lugar.equipo).subscribe(()=>{
+            this.desdeCrearEquipo==undefined;
+            this.subscription=this.$espaciosService.getLugaresUnEspacio(this.idEspacio).subscribe(
+              al => this.lugares = al);
+              this.getEquiposDisponibles();
+            });
+          this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
+}else{
+
+  console.log("Has de asignar un equipo");
+
+}
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+getEquiposDisponibles(){
+  this.subscription=this.$equiposService.getEquiposNoAsignados().subscribe(a => this.equipos = a);
+}
+
 
 
 
     ngOnDestroy(): void {
+
       this.subscription.unsubscribe();
     }
 
 
 
+  }
 
 
 
 
 
-   /* else{
-      console.log("prueba1");
-
-       if(!lugar.matricula){
-
-      if(this.equipoHijo.id){
-
-
-              this.equipoHijo.asignado=true;
-              lugar.equipo=this.equipoHijo;
-              lugar.espacio=this.espacioHijo;
-              this.$equiposService.update(lugar.equipo).subscribe().unsubscribe;
-              this.$lugaresService.updateLugar(lugar).subscribe().unsubscribe;
-
-
-      }else{
-
-        console.log("Has de asignar un equipo");
-
-      }
-    }
-
-
-    if(lugar.matricula){
-
-      if(this.equipoHijo.id){
-
-
-              this.equipoHijo.asignado=true;
-              this.vehiculo.equipo=this.equipoHijo;
-              this.vehiculo.espacio=this.espacioHijo;
-              this.vehiculo.id=lugar.id;
-              this.vehiculo.marca=lugar.marca;
-              this.vehiculo.matricula=lugar.matricula;
-              this.vehiculo.modelo=lugar.modelo;
-              this.vehiculo.telefono=lugar.telefono;
-              this.vehiculo.ubicacion=lugar.ubicacion;
-              this.$equiposService.update(this.vehiculo.equipo).subscribe().unsubscribe;
-              this.$lugaresService.updateLugar(lugar).subscribe().unsubscribe;
-
-
-      }else{
-
-        console.log("Has de asignar un equipo");
-
-    }
-
-    } */
-
-
-
-
-
-
-
-
-
-
-
-
-
-   /*   if(this.equipoHijo.id){
-
-            if(!lugar.equipo){
-
-              this.equipoHijo.asignado=true;
-              lugar.equipo=this.equipoHijo;
-              lugar.espacio=this.espacioHijo;
-              this.$equiposService.update(lugar.equipo).subscribe().unsubscribe;
-              this.$lugaresService.updateLugar(lugar).subscribe().unsubscribe;
-
-            }
-
-            if(lugar.equipo){
-
-              lugar.equipo.asignado=false;
-              this.$equiposService.update(lugar.equipo).subscribe().unsubscribe;
-              this.equipoHijo.asignado=true;
-              this.$equiposService.update(this.equipoHijo).subscribe().unsubscribe;
-              lugar.equipo=this.equipoHijo;
-              lugar.espacio=this.espacioHijo;
-              this.$lugaresService.updateLugar(lugar).subscribe().unsubscribe;
-          }
-
-        }else{
-          console.log("Has de asignar un equipo");
-        }
-
-}
-*/
-
-}
 

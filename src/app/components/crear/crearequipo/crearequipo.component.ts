@@ -6,6 +6,7 @@ import { Equipo } from 'src/app/shared/models/equipo';
 import { ClienteidService } from 'src/app/shared/data/clienteid.service';
 import { EquiposService } from 'src/app/shared/services/equipos.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -28,13 +29,14 @@ export class CrearequipoComponent implements OnInit{
   //para controlar una vista u otra
   marcador!: Boolean;
 
-
+   //objeto subscriptor para gestionar las que maneja el componente
+   subscripcion!: Subscription;
 
 
 
   //constructor
-  constructor(public $clienteid: ClienteidService,public equiposService: EquiposService,public clientesService: ClientesService,
-      public router: Router,private activatedRoute: ActivatedRoute,private toastrService: ToastrService) { }
+  constructor(private $clienteid: ClienteidService,private equiposService: EquiposService,private clientesService: ClientesService,
+      private router: Router,private activatedRoute: ActivatedRoute,private toastrService: ToastrService) { }
 
 
   //en Método OnInit se inician todas las variables a usar para crear o modificar un equipo
@@ -57,9 +59,9 @@ export class CrearequipoComponent implements OnInit{
     guardar():void{
 
     //Da la orden para mandar este equipo a traves de la api hacia el back
-    this.equiposService.createEquipo(this.selectedEquipo).subscribe(()=>{
+     this.subscripcion=this.equiposService.createEquipo(this.selectedEquipo).subscribe(()=>{
       this.toastrService.success("Accion realizada");
-    }).unsubscribe
+    });
 
     //y vuelve a la pantalla de ver los equipos
     this.router.navigateByUrl('/cardio/menuPrincipal/equipos');
@@ -72,9 +74,9 @@ export class CrearequipoComponent implements OnInit{
     update():void{
 
     //Manda el equipo seteado a traves de la api
-    this.equiposService.update(this.selectedEquipo).subscribe(()=>{
+    this.subscripcion=this.equiposService.update(this.selectedEquipo).subscribe(()=>{
       this.toastrService.success("Accion realizada");
-    }).unsubscribe
+    });
     //y vuelve a la pantalla de ver los equipos
     this.router.navigateByUrl('/cardio/menuPrincipal/equipos');
 }
@@ -87,6 +89,10 @@ export class CrearequipoComponent implements OnInit{
     IrAsignarCliente(){
     //Se guarda el equipo seteado en el servicio
     this.$clienteid.setEquipoObservable(this.selectedEquipo);
+    this.$clienteid.getEquipoObservable().subscribe(a=> {
+      this.selectedEquipo=a;
+      console.log(this.selectedEquipo.marca);
+    })
     //y nos lleva a la edicion del cliente elegido
     this.router.navigateByUrl('/cardio/menuPrincipal/clientes/edit/'+this.cliente.id);
 
@@ -114,7 +120,7 @@ export class CrearequipoComponent implements OnInit{
            }else{
             this.marcador=false;
             }
-          }).unsubscribe
+          })
     }
 
 

@@ -1,6 +1,6 @@
 import { IdClienteparaespaciosService } from '../../../shared/data/idClienteparaespacios.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Espacio } from 'src/app/shared/models/espacio';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
@@ -17,6 +17,8 @@ export class VerespaciosComponent implements OnInit,OnDestroy{
   espacios!: Espacio[];
 
   subscription!: Subscription;
+  //numero del cliente al que pertenecen los espacios
+  id!: number;
 
   //Constructor
   constructor(public $idCliente: IdClienteparaespaciosService, public $clienteServicio: ClientesService,
@@ -31,19 +33,23 @@ export class VerespaciosComponent implements OnInit,OnDestroy{
 
   //Metodo que redirecciona a un cliente en particular o deja uno vacio
   cargar():void{
-    this.subscription= this.activatedRoute.params.subscribe(
+    this.activatedRoute.params.subscribe(
       a=>{
+
         let id=a['id'];
+
         if(id){
           //Se usa el parametro id de la url para guardar la id del cliente del que se buscan sus espacios
               //se listan y se guarda en el servicio de datos para poder volver desde la vista de la lista de espacios
-
+        this.id=id;
          this.subscription= this.$clienteServicio.getEspaciosUnCliente(id).subscribe(
 
              as=>this.espacios=as
           );
 
          this.$idCliente.setIdCliente(id);
+
+        }else{
 
         }
       })}

@@ -31,10 +31,21 @@
     <input type="text" class="form-control" name="fabricante" [(ngModel)]="selectedEquipo.fabricante"  id="autoSizingInput" placeholder="{{selectedEquipo.fabricante}}">
   </div>
 
+  <div  *ngIf="marcador; else vol">
   <div class="mb-10" >
     <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Num Serie</label>
-    <input type="text" class="form-control" name="numSerie" [(ngModel)]="selectedEquipo.numSerie"  id="autoSizingInput" placeholder="{{selectedEquipo.numSerie}}">
+    <input disabled type="text" class="form-control" name="numSerie" [(ngModel)]="selectedEquipo.numSerie"  id="autoSizingInput" placeholder="{{selectedEquipo.numSerie}}">
   </div>
+  </div>
+
+  <ng-template #vol>
+    <div class="mb-10" >
+      <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Num Serie</label>
+      <input type="text" class="form-control" name="numSerie" [(ngModel)]="selectedEquipo.numSerie"  id="autoSizingInput" placeholder="{{selectedEquipo.numSerie}}">
+    </div>
+
+  </ng-template>
+
 
   <div  class="mb-10" >
     <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Fecha Fabricacion</label>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Equipo } from '../models/equipo';
-import { Cliente } from '../models/cliente';
+
 
 
 @Injectable({
@@ -81,11 +81,4 @@ export class EquiposService {
         return this.http.delete<Equipo>(this.baseUrl+'/'+id/*`${this.baseUrl}/${id}`*/)}
 
 
-
-
-  /*
-  getClientes(): Observable<Cliente[]>{
-    return this.http.get<Cliente[]>(this.baseUrl2);
-  }
-*/
 }

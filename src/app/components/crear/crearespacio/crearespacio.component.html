@@ -1,11 +1,11 @@
 <div class ="container">
-  <div class = "card  pad" >
-      <h2 class="card-title bg-warning text-center mb-30 ">INTRODUCE DATOS DEL ESPACIO</h2>
+  <div class = "card " >
+      <h2 class="card-title bg-warning text-center ">INTRODUCE DATOS DEL ESPACIO</h2>
       <div class = "card-body">
 
-      <form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-3 "  id="formul">
+      <form class="mt-1 ms-1 me-1 row row-cols-lg-3 g-0 "  id="formul">
 
-          <div  *ngIf="!marcador; else vol">
+          <div  *ngIf="!marcadorCrearMod; else vol">
             <div class= "mb-10" >
               <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Dirección</label>
               <input  type="text" class="form-control" name="direccion" [(ngModel)]="espacio.direccion"  id="autoSizingInput" placeholder="{{espacio.direccion}}">
@@ -47,41 +47,26 @@
 
             <div class="btn-group col  " role="group" aria-label="Basic mixed styles example">
               <div  *ngIf=" !espacio.id; else val">
-              <button type="button" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input" style="margin-left: 10px">Crear nuevo espacio</button>
+              <button type="button" class="btn btn-success"  (click)="guardar()"  name="bot" id="autoSizing" value="Input" style="margin-left: 5px">Crear nuevo espacio</button>
               </div>
+
               <ng-template #val>
-                <button type="button" class="btn btn-secondary"  (click)="update()"  name="bot" id="autoSizing" value="Input" style="margin-left: 10px">Modificar espacio</button>
+                <button type="button" class="btn btn-secondary"  (click)="update()"  name="bot" id="autoSizing" value="Input">Modificar espacio</button>
+                 <button type="button" class="btn btn-danger" (click)="borrarEspacio()" style="margin-left: 5px">Borrar Espacio</button>
+                 <button type="button" class="btn btn-success" (click)="crearLugar()" style="margin-left: 5px">Crear un lugar</button>
               </ng-template>
-                <button (click)="retornar()" class="btn btn-warning" style="margin-left: 10px">Volver al cliente </button>
-              <button style="margin-left: 120px"  [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" style="margin-left: 10px">Volver Menu Principal</button>
+
+
+              <button (click)="retornar()" class="btn btn-warning" style="margin-left: 5px">Volver al cliente </button>
+              <button   [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" style="margin-left: 5px">Volver Menu Principal</button>
             </div>
 
 
 
-             <div >
-              <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Elegir equipo a asignar</label>
-             <!-- <cdk-virtual-scroll-viewport itemSize="200"> -->
-              <select form-group-row class="form-select" aria-label="Default select example"  id="autoSizingInput"  [(ngModel)]="equipo" name="selectedEquipo">
-              <option selected  [ngValue]="null">Elige equipo</option>
-              <option  *ngFor="let equip of equipos" [ngValue]="equip">
-               {{equip.numSerie}}
-              </option>
-              </select>
-           <!--   </cdk-virtual-scroll-viewport>  -->
-             </div>
 
 
 
 
-            <div class="col" pad>
-              <button type="button" class="btn btn-success" (click)="asignarEquipo()" >Elegir equipo a asignar</button>
-            </div>
-
-            <div  *ngIf="marcadorCrearLugar">
-            <div class="col" pad>
-              <button type="button" class="btn btn-success" (click)="crearLugar()">Crear un lugar</button>
-            </div>
-            </div>
 
 
   </form>
@@ -91,7 +76,7 @@
 </div>
 </div>
 
-<app-verlugares [espacioHijo]="espacio" [equipoHijo]="equipo" [marcadorHijo]="marcador"></app-verlugares>
+<app-verlugares [espacioHijo]="espacio"  [marcadorHijo]="marcador"></app-verlugares>
 
 
 

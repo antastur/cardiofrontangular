@@ -1,9 +1,11 @@
 import { ClienteidService } from '../../../shared/data/clienteid.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { Cliente } from 'src/app/shared/models/cliente';
 import { Equipo } from 'src/app/shared/models/equipo';
+import { ErrorMessage } from 'src/app/shared/models/errormessage';
 import { Espacio } from 'src/app/shared/models/espacio';
 import { Lugar } from 'src/app/shared/models/lugar';
 import { EquiposService } from 'src/app/shared/services/equipos.service';
@@ -16,64 +18,68 @@ import { EspaciosService } from 'src/app/shared/services/espacios.service';
   styleUrls: ['./crearespacio.component.css']
 })
 
-export class CrearespacioComponent implements OnInit {
+export class CrearespacioComponent implements OnInit,OnDestroy{
 
-  //Equipos a seleccionar
-  equipos!: Equipo[];
-  //Equipo seleccionado
-  equipo!: Equipo;
+
   //Espacio seleccionado
   espacio!: Espacio;
   //Lugares del espacio
   lugares!: Lugar[];
   //cliente propietario
   cliente!: Cliente;
-  //Marcador para componenteverlugares
-  marcador:Boolean=false;
+  //Marcador para componenteverlugares (es heredado a componente verlugares)
+  marcador: Boolean=false;
   //Marcador para dehabilitar boton crear lugar
   marcadorCrearLugar:Boolean=true;
+  //Marcador para vista crear/modificar
+  marcadorCrearMod:Boolean=true;
+  //objeto subscriptor para gestionar las que maneja el componente
+  subscription!: Subscription;
 
 
-  constructor(public $clienteId: ClienteidService, public $equiposService: EquiposService,
-      public $espaciosService: EspaciosService, public router: Router, private activatedRoute: ActivatedRoute,
-          private toastrService: ToastrService ) {
+  //constructor con inyecciones necesarias
+  constructor(private $clienteId: ClienteidService, private $espaciosService: EspaciosService,
+           private router: Router, private activatedRoute: ActivatedRoute,
+               private toastrService: ToastrService ) {
  }
+
+
 
   //Metodo al abrir el componente que inicia variables y servicios necesarios para tratar la información del componente
   ngOnInit() {
-
-
     this.espacio = new Espacio();
-    //Para obtener todos los equipos asignables
-    this.$equiposService.getEquiposNoAsignados().subscribe(a => this.equipos = a).unsubscribe;
     this.cliente = new Cliente();
     //Obtención del cliente al que asignar el espacioque se crea y al que volver
-    this.$clienteId.getClienteObservable().subscribe(a => this.cliente = a).unsubscribe;
+    this.subscription=this.$clienteId.getClienteObservable().subscribe(a => this.cliente = a);
+    //Se delimita si es vista crear o vista según parametros de URL
     this.cargar();
 
-   }
+  }
 
 
-  //Metodo que redirecciona a un cliente en particular o deja uno vacio
+
+  //Metodo que redirecciona a un espacio en particular o deja uno vacio
   cargar(): void {
 
-    this.activatedRoute.params.subscribe(
+    this.subscription=this.activatedRoute.params.subscribe(
       a => {
         let id = a['id'];
         if (id) {
-            //Se obtiene el espacio que se sta editando y se guarda en servicio de datos para poder acceder desde otros componentes
-            this.$espaciosService.getEspacio(id).subscribe(ae =>{
+            //Se obtiene el espacio que se esta editando y se guarda en servicio de datos para poder acceder desde otros componentes
+            this.subscription=this.$espaciosService.getEspacio(id).subscribe(ae =>{
             this.espacio = ae;
             this.$clienteId.setEspacioObservable(ae);
 
           }  );
 
-            //Gestión de la vista(crear o modificar)
+            //Gestión de la vista(crear o modificar),(boton crear lugar ,si o no),para que en verlugares se vean botones de gestión o no
             this.marcador=true;
-            this.marcadorCrearLugar=true;
+            this.marcadorCrearLugar==true;
+            this. marcadorCrearMod=true;
          }else{
-                this.marcador=false;
-                this.marcadorCrearLugar=false;
+            this.marcador=true;
+            this.marcadorCrearLugar==false;
+            this. marcadorCrearMod=false;
          }
         })
      }
@@ -84,15 +90,23 @@ export class CrearespacioComponent implements OnInit {
   //Metodo que guarda el cliente al que se han dado valores en BD
   guardar(): void {
 
+    //Se comprueba con marcador si es creacion o modificacion
     //persistencia del espacio en el que se está trabajando
-    if (!this.espacio.direccion===null) {
+    if (this.marcadorCrearMod==false) {
+
       //Se setea su cliente(que es el actual)
       this.espacio.cliente=this.cliente;
-      this.$espaciosService.createEspacio(this.espacio).subscribe(()=>{
-        this.toastrService.success("Accion realizada");
-      }).unsubscribe;
-      this.router.navigateByUrl('/cardio/menuPrincipal/espacios/' + this.cliente.id);
 
+      //Se persiste,notifica y redirecciona
+        this.subscription=this.$espaciosService.createEspacio(this.espacio).subscribe(()=>{
+        this.toastrService.success("Accion realizada");
+        this.router.navigateByUrl('/cardio/menuPrincipal/espacios/' + this.cliente.id);
+      });
+
+
+    } else {
+      //Aviso de mal suministro de datos
+      this.toastrService.warning("Has de rellenar \n la fecha de registro y \n la ubicación como mínimo")
     }
 
   }
@@ -101,37 +115,36 @@ export class CrearespacioComponent implements OnInit {
   //Metodo que actualiza un cliente y devuelve a la vista de ver todos los clientes
   update(): void {
 
-    if (this.espacio.direccion) {
-      console.log("true"+this.espacio.direccion);
-      //Manda el equipo seteado a traves de la api
-      this.$espaciosService.updateEspacio(this.espacio).subscribe(()=>{
-        this.toastrService.success("Accion realizada");
-      }).unsubscribe;
+    //Se comprueba con marcador si es creacion o modificacion
+    //persistencia del espacio en el que se está trabajando
+    if (!this.marcadorCrearMod==false) {
 
-      this.router.navigateByUrl('/cardio/menuPrincipal/espacios/' + this.cliente.id);
-    } else {
-      console.log("true"+this.espacio.direccion);
+      //Manda el equipo seteado a traves de la api
+      this.subscription= this.$espaciosService.updateEspacio(this.espacio).subscribe(()=>{
+        this.toastrService.success("Accion realizada");
+      });
+
+
+   } else {
+      //Aviso de mal suministro de datos
       this.toastrService.warning("Has de rellenar \n la ubicación como mínimo")
     }
 
   }
 
 
-  //Método que carga un equipo seleccionado entre los asignables para poder asignarlo en otro componente
-  asignarEquipo() {
-
-    if (!this.equipo) {
-
-             console.log("Elige un equipo a asignar");
-
-            }else{
-                      this.$clienteId.setEquipoObservable(this.equipo);
-                      console.log("equipo en este lugar "+this.equipo.numSerie);
-
-                    }
-     }
 
 
+  borrarEspacio():void{
+
+
+         this.subscription=this.$espaciosService.deleteEspacio(this.espacio.id).subscribe(()=>{
+          //Se lanza mensaje de accion
+           this.toastrService.success("Acción realizada")
+          //Se vuelve al cliente
+           this.router.navigateByUrl('/cardio/menuPrincipal/clientes/edit/' + this.cliente.id);
+          });
+}
 
 
   //Método para volver a la interfaz del cliente sobre el que se está trabajando
@@ -146,26 +159,12 @@ export class CrearespacioComponent implements OnInit {
   crearLugar() {
 
     this.router.navigateByUrl('/cardio/menuPrincipal/lugares/edit/');
+  }
 
 
-/*
-
-    //Metodo para borrar un equipo
-  deleteEspacio(espacio: Espacio):void{
-
-    console.log('borrado');
-    console.log(espacio.id);
-    this.$espacioServicio.deleteEspacio(espacio.id).subscribe(()=>{
-      this.toastrService.success("Acción realizada")})
-      .unsubscribe;
-      this.$clienteServicio.getEspaciosUnCliente(espacio.id).subscribe(
-        response=>this.espacios=response).unsubscribe;
-
-      }
-*/
-
-
-
+  ngOnDestroy(): void {
+    this.marcador=false;
+    this.subscription.unsubscribe();
   }
 
 }

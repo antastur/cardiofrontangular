@@ -1,3 +1,4 @@
+
 import { ClienteidService } from '../../../shared/data/clienteid.service';
 import { ClientesService } from './../../../shared/services/clientes.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -7,6 +8,7 @@ import { Espacio } from 'src/app/shared/models/espacio';
 import { Curso } from 'src/app/shared/models/curso';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { ErrorMessage } from 'src/app/shared/models/errormessage';
 
 
 @Component({
@@ -29,13 +31,12 @@ export class CrearclienteComponent implements OnInit{
    cliente!: Cliente;
    //para controlar una vista u otra
    marcador!: Boolean;
-   //
+   //objeto subscriptor para gestionar las que maneja el componente
    subscripcion!: Subscription;
 
-  //constructor
-   constructor(public $clienteId: ClienteidService,public $clientesService: ClientesService, public router: Router,private activatedRoute: ActivatedRoute,private toastrService: ToastrService) {
 
-
+  //constructor con inyecciones necesarias
+   constructor(private $clienteId: ClienteidService,private $clientesService: ClientesService, private router: Router,private activatedRoute: ActivatedRoute,private toastrService: ToastrService) {
 
  }
 
@@ -49,7 +50,7 @@ export class CrearclienteComponent implements OnInit{
     this.espacio=new Espacio();
     this.curso.nombre='';
     this.espacio.direccion='';
-    this.marcador=false;
+
     //este metodo se encarga de delimitar si hay pathvariable y si es asi carga en
     //selectedCliente el de ese id al iniciar el componente
     this.cargar();
@@ -82,7 +83,7 @@ export class CrearclienteComponent implements OnInit{
 
                 //marcador para mostrar en vista boton crear cliente
               }else{
-                this.marcador=false;
+                this.marcador==false;
 
               }
             } )
@@ -96,12 +97,11 @@ export class CrearclienteComponent implements OnInit{
 
   //Da la orden para mandar este cliente a traves de la api hacia el back
   this.subscripcion=this.$clientesService.createCliente(this.cliente).subscribe(()=>{
-
-  });
-  this.toastrService.success("Acción realizada");
-  this.router.navigateByUrl('/cardio/menuPrincipal/clientes');
-
-}
+    //Se notifica y se vuelve a ver clientes
+    this.toastrService.success("Acción realizada");
+    this.router.navigateByUrl('/cardio/menuPrincipal/clientes')}
+  );
+  }
 
 
 
@@ -110,6 +110,7 @@ update():void{
 
  //Manda el equipo seteado a traves de la api
   this.subscripcion=this.$clientesService.updateCliente(this.cliente).subscribe(()=>{
+     //Se notifica y se vuelve a ver clientes
     this.toastrService.success("Acción realizada");
     this.router.navigateByUrl('/cardio/menuPrincipal/clientes');
     });
@@ -125,13 +126,10 @@ IrAsignarEspacio(){
   if(this.espacio.direccion!==''){
     this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/'+this.espacio.id);
 }else{
-
-  this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit');
+    this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit');
 }
 
 }
-
-
 
 
 
@@ -140,16 +138,17 @@ IrAsignarCurso(){
 
     if(this.curso.nombre!==''){
     this.router.navigateByUrl('/cardio/menuPrincipal/cursos/edit/'+this.curso.id);
-
-  }
+  }else{
+    this.router.navigateByUrl('/cardio/menuPrincipal/cursos/edit');
+}
 
 }
 
-/*
+
 ngOnDestroy(): void {
  this.subscripcion.unsubscribe();
 }
 
-*/
+
 
 }

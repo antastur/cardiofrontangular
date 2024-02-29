@@ -1,7 +1,7 @@
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Component,  OnDestroy, OnInit } from '@angular/core';
+import {  Router } from '@angular/router';
+import {  Subscription } from 'rxjs';
 import { Cliente } from 'src/app/shared/models/cliente';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 
@@ -28,33 +28,46 @@ export class VerclientesComponent implements OnInit,OnDestroy {
 
       ngOnInit(): void {
 
+        this.reloadData();
+
         //se cargan todos los clientes de BD
        //this.subscription=this.$clientesServicio.getClientes().subscribe(e=>this.clientes=e);
-        //this.subscription=this.$clientesServicio.refresh$.subscribe(()=>{
+        this.subscription=this.$clientesServicio.refresh$.subscribe(()=>{
         this.reloadData();
-       // })
+
+       //this.subscription=this.reloadData();
+        })
     }
 
       //Metodo que recarga la lista clientes
-      reloadData(): void{
-        this.subscription=this.$clientesServicio.getClientes().subscribe(e=>this.clientes=e);
+      reloadData(): Subscription{
+        return this.$clientesServicio.getClientes().subscribe(e=>this.clientes=e);
 
       }
 
       //Metodo para borrar un cliente de BD
       deleteCliente(cliente: Cliente):void{
         //llamando al metodo borrar del servicio y asignandolo a objeto subscription
-        this.subscription=this.$clientesServicio.deleteCliente(cliente.id).subscribe(()=>{
+      /*  this.subscription=this.$clientesServicio.deleteCliente(cliente.id).subscribe(()=>{
 
           this.toastrService.success("Acción realizada");
           });
-         this.subscription=this.$clientesServicio.getClientes().subscribe(e=>this.clientes=e);
+         this.subscription=this.$clientesServicio.getClientes().subscribe(e=>this.clientes=e); */
 
+         this.subscription=this.$clientesServicio.deleteCliente(cliente.id).subscribe(()=>{
+          //Se fuerza el borrado del cliente en la vista
+          this.clientes=this.clientes.filter(a=> a !== cliente);
+          //SE lanza mensaje de accion
+           this.toastrService.success("Acción realizada")});
+
+
+
+         // .unsubscribe();
  }
 
 
           ngOnDestroy(): void {
-            this.subscription.unsubscribe();
+            this.subscription.unsubscribe;
           }
 
 
@@ -69,8 +82,6 @@ export class VerclientesComponent implements OnInit,OnDestroy {
 
             this.router.navigateByUrl('/cardio/menuPrincipal/clientes/edit/'+numb);
           }
-
-
 
 
 
