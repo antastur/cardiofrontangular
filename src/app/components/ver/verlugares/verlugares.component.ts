@@ -159,11 +159,13 @@ asignarEquipo(lugar: Lugar){
             this.subscription=this.$espaciosService.getLugaresUnEspacio(this.idEspacio).subscribe(
               al => this.lugares = al);
               this.getEquiposDisponibles();
+              this.toastrService.success("Accion realizada");
+
             });
           this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
 
     }else{
-
+     // this.toastrService.warning("Has de asignar un equipo");
     console.log("Has de asignar un equipo");
     }
 
@@ -179,6 +181,7 @@ asignarEquipo(lugar: Lugar){
             this.subscription=this.$espaciosService.getLugaresUnEspacio(this.idEspacio).subscribe(
               al => this.lugares = al);
               this.getEquiposDisponibles();
+              this.toastrService.success("Accion realizada");
             });
           this.subscription=this.$lugaresService.updateLugar(lugar).subscribe();
 }else{

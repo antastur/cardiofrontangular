@@ -4,11 +4,11 @@
       <div class = "card-body">
 
 
-        <div class="mt-1 ms-1 me-1 row row-cols-lg-3 g-1 ">
+        <div class="mt-1 ms-1 me-1 row row-cols-lg-3 g-1 " >
 
         <div class="col" pad></div>
         <div class="col" pad></div>
-          <div class="col" pad>
+          <div class="col" pad *ngIf="marcadorHijo">
           <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Elegir equipo a asignar</label>
          <!-- <cdk-virtual-scroll-viewport itemSize="200"> -->
           <select form-group-row class="form-select" aria-label="Default select example"  id="autoSizingInput"  [(ngModel)]="equipoSelected" name="equipoSelected">

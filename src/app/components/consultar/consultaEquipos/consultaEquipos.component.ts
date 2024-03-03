@@ -22,7 +22,8 @@ equiposExt!: Equipo[];
 equiposUsad!: Equipo[];
 //Lista de equipos que caducan en 1 año
 equiposCad!: Equipo[];
-
+//Lista de equipos con mantenimiento en 2 meses
+equiposMant!: Equipo[];
 
 
   //constructor
@@ -39,12 +40,14 @@ equiposCad!: Equipo[];
     this.equiposExt=[];
     this.equiposUsad=[];
     this.equiposCad=[];
+    this.equiposMant=[];
     this.equipoElegido=new Equipo();
     this.equiposService.getEquipos().subscribe(e=>this.equiposTot=e).unsubscribe;
     this.equiposService.getEquiposNoAsignados().subscribe(e=>this.equiposDisp=e).unsubscribe;
     this.equiposService.getEquiposUsados().subscribe(e=>this.equiposUsad=e).unsubscribe;
     this.equiposService.getEquiposExterior().subscribe(e=>this.equiposExt=e).unsubscribe;
     this.equiposService.getEquiposCaducos().subscribe(e=>this.equiposCad=e).unsubscribe;
+    this.equiposService.getEquiposMantenimiento().subscribe(e=>this.equiposMant=e).unsubscribe;
 
   }
 

@@ -11,7 +11,8 @@
                           <th scope="col">Stock equipos disponibles</th>
                           <th scope="col">Stock cabinas de exterior</th>
                           <th scope="col">Stock de equipos usados</th>
-                          <th scope="col" >Stock de equipos con caducidad inferior a 1 año</th>
+                          <th scope="col">Stock revision menor 2 meses</th>
+                          <th scope="col" >Stock con caducidad menor 1 año</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -22,6 +23,7 @@
                               <td> {{ equiposDisp.length}}</td>
                               <td> {{ equiposExt.length}}</td>
                               <td> {{ equiposUsad.length}}</td>
+                              <td> {{ equiposMant.length}}</td>
                               <td> {{ equiposCad.length}}</td>
 
                         </tbody>
@@ -31,7 +33,7 @@
 
 
                   <div class="card pad ">
-                      <form class="mt-1 ms-1 me-1 row row-cols-lg-5 g-3 "  id="formul">
+                      <form class="mt-1 ms-1 me-1 row row-cols-lg-6 g-3 "  id="formul">
 
                     <div class="mb10 ">
                         <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos</label>
@@ -102,6 +104,23 @@
 
 
               </div>
+
+
+              <div class="mb10 ">
+                <label style="background-color: rgb(252, 252, 202)" for="autoSizingInput">Equipos a revisar 2 meses</label>
+
+
+                    <select class="form-select" aria-label="Default select example" [(ngModel)]="equipoElegido" name="equipoElegido" >
+                      <option [ngValue]="null">         Elige un equipo       </option>
+                      <option *ngFor="let equip of equiposMant"  [ngValue]="equip">{{equip.numSerie}}</option>
+                    </select>
+
+                    <div class="mb10 ">
+                      <button type="submit" class="btn btn-success" (click)="irModificarEquipo()" name="ir" id="autoSizing" value="Input" >Ir a equipo</button>
+                    </div>
+
+
+            </div>
 
 
 

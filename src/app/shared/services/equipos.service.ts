@@ -23,6 +23,8 @@ export class EquiposService {
 
   private baseUrl6 = "http://localhost:8080/cardio/menuPrincipal/consultas/caducidad";
 
+  private baseUrl7 = "http://localhost:8080/cardio/menuPrincipal/consultas/mantenimiento";
+
 
   //Constructor
   constructor(private http: HttpClient) { }
@@ -51,6 +53,12 @@ export class EquiposService {
   getEquiposCaducos(): Observable<Equipo[]>{
     return this.http.get<Equipo[]>(this.baseUrl6);
   }
+
+   //Metodo para obtener todos los equipos que caducan antes de 1 año desde el back
+   getEquiposMantenimiento(): Observable<Equipo[]>{
+    return this.http.get<Equipo[]>(this.baseUrl7);
+  }
+
 
 
   //Metodo para obtener un equipo por su id desde el back
