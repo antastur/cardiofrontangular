@@ -7,6 +7,7 @@ import { Espacio } from '../models/espacio';
 @Injectable({
   providedIn: 'root'
 })
+//Metodo en el que guardar y del que obtener clientes,equipos y espacios desde componentes que no sean ni hijos ni padres
 export class ClienteidService {
 
    private cliente=new Cliente();

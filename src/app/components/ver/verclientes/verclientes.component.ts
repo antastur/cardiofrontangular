@@ -31,11 +31,9 @@ export class VerclientesComponent implements OnInit,OnDestroy {
         this.reloadData();
 
         //se cargan todos los clientes de BD
-       //this.subscription=this.$clientesServicio.getClientes().subscribe(e=>this.clientes=e);
         this.subscription=this.$clientesServicio.refresh$.subscribe(()=>{
         this.reloadData();
 
-       //this.subscription=this.reloadData();
         })
     }
 
@@ -48,41 +46,35 @@ export class VerclientesComponent implements OnInit,OnDestroy {
       //Metodo para borrar un cliente de BD
       deleteCliente(cliente: Cliente):void{
         //llamando al metodo borrar del servicio y asignandolo a objeto subscription
-      /*  this.subscription=this.$clientesServicio.deleteCliente(cliente.id).subscribe(()=>{
-
-          this.toastrService.success("Acción realizada");
-          });
-         this.subscription=this.$clientesServicio.getClientes().subscribe(e=>this.clientes=e); */
-
          this.subscription=this.$clientesServicio.deleteCliente(cliente.id).subscribe(()=>{
           //Se fuerza el borrado del cliente en la vista
           this.clientes=this.clientes.filter(a=> a !== cliente);
           //SE lanza mensaje de accion
            this.toastrService.success("Acción realizada")});
+       }
 
 
 
-         // .unsubscribe();
- }
-
-
-          ngOnDestroy(): void {
-            this.subscription.unsubscribe;
-          }
-
-
+          //Metodo para ir a pantalla crear cliente
           irACrear(): void{
 
             this.router.navigateByUrl('/cardio/menuPrincipal/clientes/edit/');
           }
 
 
-
+           //Metodo para ir a pantalla mpdificar cliente
           irAUpdate(numb: number): void{
 
             this.router.navigateByUrl('/cardio/menuPrincipal/clientes/edit/'+numb);
           }
 
+
+
+
+          //Metodo final para cerrar subscripciones
+          ngOnDestroy(): void {
+            this.subscription.unsubscribe;
+          }
 
 
 }

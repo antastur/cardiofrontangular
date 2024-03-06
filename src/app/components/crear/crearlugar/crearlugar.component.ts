@@ -31,8 +31,9 @@ export class CrearlugarComponent implements OnInit {
   subscription!: Subscription;
 
   //Constructor inyectando servicios necesarios
-  constructor(private $clienteid: ClienteidService, private $equiposService: EquiposService, private $lugaresService: LugaresService,
-    private $vehiculoService: VehiculosService, private router: Router, private activatedRoute: ActivatedRoute,private toastrService: ToastrService) {
+  constructor(private $clienteid: ClienteidService, private $lugaresService: LugaresService,
+    private $vehiculoService: VehiculosService,private router: Router, private activatedRoute: ActivatedRoute,
+    private toastrService: ToastrService) {
  }
 
  //Método en el que se inician variables y servicios necesarios
@@ -43,8 +44,6 @@ export class CrearlugarComponent implements OnInit {
     //Se recupera el espacio guardado en el servicio de datos
     this.subscription=this.$clienteid.getEspacioObservable().subscribe(a=>this.espacio=a);
     this.equipo=new Equipo();
-    //Se recupera el equipo guardado en el servicio de datos
-   // this.subscription=this.$clienteid.getEquipoObservable().subscribe(e=>this.equipo=e);
     this.cliente=new Cliente();
     //Se recupera el cliente guardado en el servicio de datos
     this.subscription=this.$clienteid.getClienteObservable().subscribe(a=>this.cliente=a);
@@ -112,15 +111,8 @@ update(){
 
   //Si el lugar tiene un equipo
   if(this.equipo){
-
-  /*  this.equipo=this.lugar.equipo;
-    this.equipo.asignado=true;
-    this.subscription=this.$equiposService.update(this.equipo).subscribe(()=>{
-
-    }) */
-
-            if(this.lugar.matricula){
-
+                  //y es vehiculo se setean su equipo y espacio se actualiza notifica y reenvia a listar lugares
+             if(this.lugar.matricula){
 
                 this.lugar.equipo=this.equipo;
                 this.lugar.espacio=this.espacio;
@@ -130,7 +122,7 @@ update(){
                 });
 
               }
-
+            //si es un lugar se hace lo mismo que si fuese vehiculo
             if(!this.lugar.matricula){
 
 
@@ -143,7 +135,7 @@ update(){
                 });
 
                 }
-
+//si el lugar no tiene equipo solo se setea espacio sea vehiculo o lugar
   }else{
 
          if(this.lugar.matricula){
@@ -164,11 +156,7 @@ update(){
                     this.router.navigateByUrl('/cardio/menuPrincipal/espacios/edit/' + this.espacio.id);
                   });
 
-                 // }
-   }
-}
-
-
-}
-
+      }
+    }
+  }
 }

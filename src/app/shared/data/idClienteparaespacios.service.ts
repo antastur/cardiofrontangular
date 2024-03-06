@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+//Metodo en el que guardar y del que obtener el ud de un cliente desde componentes que no sean ni hijos ni padres
 export class IdClienteparaespaciosService {
 
 

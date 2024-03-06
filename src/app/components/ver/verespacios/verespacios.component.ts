@@ -46,7 +46,7 @@ export class VerespaciosComponent implements OnInit,OnDestroy{
 
              as=>this.espacios=as
           );
-
+         //Carga del id del cliente en servicio de datos
          this.$idCliente.setIdCliente(id);
 
         }else{
@@ -54,7 +54,7 @@ export class VerespaciosComponent implements OnInit,OnDestroy{
         }
       })}
 
-
+      //Metodo final para cerrar subscripciones
       ngOnDestroy(): void {
         this.subscription.unsubscribe();
       }

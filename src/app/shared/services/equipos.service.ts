@@ -68,9 +68,9 @@ export class EquiposService {
 
 
   //Metodo para mandar un equipo al back para que lo persista
-  createEquipo(equipo: Equipo) : Observable<Equipo>{
+  createEquipo(equipo: Equipo) : Observable</*Equipo*/Object>{
 
-    return this.http.post<Equipo>(`${this.baseUrl}`,equipo );
+    return this.http.post(`${this.baseUrl}`,equipo );//post<Equipo>(`${this.baseUrl}`,equipo );
   }
 
 

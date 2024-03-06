@@ -48,10 +48,10 @@
                               <td> {{ equipo.modelo}}</td>
                               <td> {{ equipo.fabricante}}</td>
                               <td> {{ equipo.numSerie}}</td>
-                              <td> {{ equipo.fechaFabricacion}}</td>
-                              <td> {{ equipo.fechaCaducidad}}</td>
-                              <td> {{ equipo.fechaEntrega}}</td>
-                              <td> {{ equipo.fechaMantenimiento}}</td>
+                              <td> {{ equipo.fechaFabricacion | date: 'd/M/yy'}}</td>
+                              <td> {{ equipo.fechaCaducidad | date: 'd/M/yy'}}</td>
+                              <td> {{ equipo.fechaEntrega | date: 'd/M/yy'}}</td>
+                              <td> {{ equipo.fechaMantenimiento| date: 'd/M/yy' }}</td>
                               <td> {{ equipo.codAiviago}}</td>
                               <td> {{ equipo.pin}}</td>
                               <td> {{ equipo.puk}}</td>

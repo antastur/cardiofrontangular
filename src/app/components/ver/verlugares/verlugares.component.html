@@ -8,16 +8,23 @@
 
         <div class="col" pad></div>
         <div class="col" pad></div>
-          <div class="col" pad *ngIf="marcadorHijo">
-          <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Elegir equipo a asignar</label>
-         <!-- <cdk-virtual-scroll-viewport itemSize="200"> -->
-          <select form-group-row class="form-select" aria-label="Default select example"  id="autoSizingInput"  [(ngModel)]="equipoSelected" name="equipoSelected">
-          <option selected  [ngValue]="null">Elige equipo</option>
-          <option  *ngFor="let equip of equipos" [ngValue]="equip">
-           {{equip.numSerie}}
-          </option>
-          </select>
-        </div>
+
+
+        <div class="col" pad *ngIf="marcadorHijo">
+
+              <label style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Elegir equipo a asignar</label>
+              <!-- <cdk-virtual-scroll-viewport itemSize="200"> -->
+              <div class="input-group mb-3">
+                  <select form-group-row class="form-select" aria-label="Default select example"  id="autoSizingInput"  [(ngModel)]="equipoSelected" name="equipoSelected">
+                      <option selected  [ngValue]="null">Elige equipo</option>
+                      <option  *ngFor="let equip of equipos" [ngValue]="equip">
+                          {{equip.numSerie}}
+                      </option>
+                  </select>
+
+              </div>
+
+            </div>
 
         <!--  <div class="col" pad>
             <button type="button" class="btn btn-success" (click)="elegirEquipo()" >Elegir equipo a asignar</button>
@@ -58,7 +65,7 @@
                     </ng-template>
 
                      <div  *ngIf="marcadorHijo">
-                      <td ><button (click)="asignarEquipo(lugar)" class="btn btn-success">Asignar/Desasignar equipo</button></td>
+                      <td ><button (click)="desasignarEquipo(lugar)" class="btn btn-success">Asigar/Desasignar equipo</button></td>
                       <td ><button  (click)="updateLugar(lugar)" class="btn btn-secondary">Update</button></td>
                       <td ><button (click)="deleteLugar(lugar)"  class="btn btn-danger">Delete</button></td>
                      </div>

@@ -33,20 +33,20 @@ export class ClientesService {
   getClientes(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.baseUrl);}
 
-
+  //Para obtener un cliente
   getCliente(id: number): Observable<Cliente> {
     return this.http.get<Cliente>(this.baseUrl + '/' + id);
   }
-
+  //Para obtener los listados de un cliente
   getEspaciosUnCliente(id: number): Observable<Espacio[]> {
     return this.http.get<Espacio[]>(this.baseUrl2 + '/' + id);
   }
-
+  //Para obtener los cursos de un cliente
   getCursosUnCliente(id: number): Observable<Curso[]>{
     return this.http.get<Curso[]>(this.baseUrl3+'/'+id);
   }
 
-
+  //Para crear un cliente
   createCliente(cliente: Cliente): Observable<any> {
 
     return this.http.post<Object>(`${this.baseUrl}`, cliente).pipe(
@@ -59,7 +59,7 @@ export class ClientesService {
 
 
 
-
+  //Para modificar un cliente
   updateCliente(cliente: Cliente): Observable<Cliente> {
 
     return this.http.put<Cliente>(`${this.baseUrl}/${cliente.id}`, cliente).pipe(
@@ -69,15 +69,12 @@ export class ClientesService {
          ))}
 
 
-
+ //Para borrar un cliente
   deleteCliente(id: number): Observable<Cliente> {
 
     return this.http.delete<Cliente>(this.baseUrl + '/' + id/*`${this.baseUrl}/${id}`*/) /*.pipe(
      tap(() =>{
         this._refresh$.next();
-
-
-
 
       }
          )) */

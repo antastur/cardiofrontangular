@@ -62,10 +62,19 @@
     <input type="date" class="form-control" name="fechaEntrega" [(ngModel)]="selectedEquipo.fechaEntrega"  id="autoSizingInput" placeholder="{{selectedEquipo.fechaEntrega}}">
   </div>
 
+  <div  *ngIf="!marcador; else vil">
+  <div class="mb-10" >
+    <label   style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Fecha Mnto</label>
+    <input disabled type="date" class="form-control" name="fechaMantenimiento" [(ngModel)]="selectedEquipo.fechaMantenimiento"  id="autoSizingInput" placeholder="{{selectedEquipo.fechaMantenimiento}}">
+  </div>
+</div>
+
+  <ng-template #vil>
   <div class="mb-10" >
     <label   style ="background-color: rgb(252, 252, 202)"  for="autoSizingInput">Fecha Mnto</label>
     <input type="date" class="form-control" name="fechaMantenimiento" [(ngModel)]="selectedEquipo.fechaMantenimiento"  id="autoSizingInput" placeholder="{{selectedEquipo.fechaMantenimiento}}">
   </div>
+</ng-template>
 
   <div class="mb-10" >
     <label   style ="background-color: rgb(252, 252, 202)" for="autoSizingInput">Cod AiviaGo</label>
