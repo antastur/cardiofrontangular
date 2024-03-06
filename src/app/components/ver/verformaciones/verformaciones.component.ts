@@ -52,7 +52,7 @@ export class VerformacionesComponent implements OnInit{
 deleteCurso(formacion: Curso):void{
   console.log('borrado');
   console.log(formacion.id);
-  this.formacionesService.deleteCurso(formacion.id).subscribe(
+  this.formacionesService.deleteFormacion(formacion.id).subscribe(
     res =>this.formacionesService.getFormaciones().subscribe(
       response=>this.formaciones=response
     ));
