@@ -1,35 +1,36 @@
 
-<div class ="container">
-  <div class = "card">
+
+
+
+
       <h3 class="text-center bg-warning" >Lista de cursos</h3>
-      <div class = "card-body">
+      <div class ="container-fluid">
+        <div class = "card-fluid">
 
-        <table class="table table-striped">
+
+     <cdk-virtual-scroll-viewport itemSize="100">
+        <table class="g-col-4 g-col-md-10">
           <thead>
-              <th>Id</th>
               <th> Nombre</th>
+          </thead>
+          <tbody *cdkVirtualFor="let curso of cursos" >
 
+              <tr class= "bg-warning">{{ curso.nombre}}</tr >
 
-           </thead>
-          <tbody>
-              <tr *ngFor = "let curso of cursos">
+                 <!--<td style="text-align:right"> <button [routerLink]="['/cardio/menuPrincipal/formaciones']" class="btn btn-warning">Ver formaciones</button></td> -->
+                <td></td>
+                <td></td>
+               <td> <app-verformaciones></app-verformaciones></td>
 
-                  <td> {{ curso.id}}</td>
-                  <td> {{ curso.nombre}}</td>
-                  <td style="text-align:right"> <button [routerLink]="['/cardio/menuPrincipal/formaciones']" class="btn btn-warning">Ver formaciones</button></td>
-
-
-
-               </tr >
-
-
+          </tbody>
             </table>
+        </cdk-virtual-scroll-viewport>
 
 
 
-
-        <div class="grid text-center">
-          <div class="g-col-4 g-col-md-10">
+          <div class = "card">
+          <div class="grid text-center">
+            <div class="g-col-4 g-col-md-10">
             <button [routerLink]="['/cardio/menuPrincipal']" class="btn btn-warning" >Volver a Inicio</button>
             <button [routerLink]="['/cardio/menuPrincipal/cursos/edit']" class="btn btn-success"   style="margin-left: 100px">Crear Curso</button>
             <button [routerLink]="['/cardio/menuPrincipal/clientes']" class="btn btn-warning"  style="margin-left: 100px">Volver a ver clientes</button>
@@ -37,5 +38,4 @@
         </div>
       </div>
     </div>
-  </div>
-
+      </div>

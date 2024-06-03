@@ -92,7 +92,7 @@ export class CrearespacioComponent implements OnInit,OnDestroy{
 
     //Se comprueba con marcador si es creacion o modificacion
     //persistencia del espacio en el que se está trabajando
-    if (this.marcadorCrearMod=false) {
+    if (this.marcadorCrearMod==false) {
 
       //Se setea su cliente(que es el actual)
       this.espacio.cliente=this.cliente;
