@@ -1,6 +1,50 @@
-<p>verformaciones works!</p>
-<p>verformaciones works!</p>
-<p>verformaciones works!</p>
-<p>verformaciones works!</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  </head>
+  <body>
 
 
+
+
+    <div class= "card pad text-center ">
+                  <table class="table ">
+
+                      <thead  >
+                          <th scope="col">Tipo</th>
+                          <th scope="col"> Dia Formacion</th>
+                          <th scope="col"> Día recuerdo</th>
+                          <th scope="col"> Señaletica</th>
+                          <th scope="col">Num asistentes</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Impartidor</th>
+
+                      </thead>
+                      <tbody>
+
+                          <tr *ngFor = "let formacion of formaciones" >
+
+                              <td> {{ formacion.tipo}} </td>
+                              <td> {{ formacion.dateFormacion | date: 'd/M/yy'}}</td>
+                              <td> {{ formacion.recuerdo | date: 'd/M/yy'}}</td>
+                              <td> {{ formacion.senaletica}}</td>
+                              <td> {{ formacion.numAsistentes}}</td>
+                              <td> {{ formacion.estado}}</td>
+                              <td> {{ formacion.impartidor}}</td>
+
+
+                              <td><button (click)="deleteFormacion(formacion)" class="btn btn-danger">Delete</button></td>
+                            <!-- <td><button [routerLink]="['/cardio/menuPrincipal/equipos/edit', equipo.id]" class="btn btn-secondary"  >Update</button></td> -->
+                          </tr>
+
+                      </tbody>
+                      </table>
+    </div>
+
+
+  </body>
+</html>

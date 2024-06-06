@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Formacion } from '../models/formacion';
 import { Observable } from 'rxjs';
+import { FormacionDto } from '../models/FormacionDto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,13 @@ export class FormacionesService {
 constructor(private http: HttpClient) { }
 
 //para obtener una lista de formaciones
-getFormaciones(): Observable<Formacion[]>{
-  return this.http.get<Formacion[]>(this.baseUrl);
+getFormaciones(): Observable<FormacionDto[]>{
+  return this.http.get<FormacionDto[]>(this.baseUrl);
 }
 
 //Obtener una formacion
-getFormacion(id: number): Observable<Formacion>{
-  return this.http.get<Formacion>(this.baseUrl+'/'+id);
+getFormacion(id: number): Observable<FormacionDto>{
+  return this.http.get<FormacionDto>(this.baseUrl+'/'+id);
 }
 
 //Para obtener los alumnos de una formacion
@@ -31,7 +32,7 @@ getAlumnosUnaFormacion(id: number): Observable<Formacion[]> {
 }
 
 //Para crear una formacion
-createFormacion(formacion: Formacion) : Observable<Formacion>{
+createFormacion(formacion: Formacion) : Observable<FormacionDto>{
 
   return this.http.post<Formacion>(`${this.baseUrl}`,formacion );  /* .pipe(
  tap({
@@ -40,7 +41,7 @@ createFormacion(formacion: Formacion) : Observable<Formacion>{
 }
 
 //Para actualizar una formacion
-updateFormacion(formacion: Formacion): Observable<Formacion>{
+updateFormacion(formacion: Formacion): Observable<FormacionDto>{
   return this.http.put<Formacion>(`${this.baseUrl}/${formacion.id}`,formacion)/*.pipe(
     tap({
       error: e => this.handlerror(e)
@@ -48,7 +49,7 @@ updateFormacion(formacion: Formacion): Observable<Formacion>{
 
 
 //Para borrar una formacion
-deleteFormacion(id: number): Observable<Formacion>{
+deleteFormacion(id: number): Observable<FormacionDto>{
       return this.http.delete<Formacion>(this.baseUrl+'/'+id/*`${this.baseUrl}/${id}`*/)}
 
 
