@@ -25,6 +25,9 @@ import {MatTableModule} from '@angular/material/table';
 import { ConsultaEquiposComponent } from './components/consultar/consultaEquipos/consultaEquipos.component';
 import { CrearlugarComponent } from './components/crear/crearlugar/crearlugar.component';
 import {  HttpErrorInterceptorService } from './interceptors/HttpErrorInterceptor.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import {ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,12 +48,16 @@ import {  HttpErrorInterceptorService } from './interceptors/HttpErrorIntercepto
     CrearespacioComponent,
     ConsultaEquiposComponent,
     CrearlugarComponent,
+    ConfirmationDialogComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    MatDialogModule,
+    MatButtonModule,
     BrowserAnimationsModule,
     ScrollingModule,
     MatTableModule,

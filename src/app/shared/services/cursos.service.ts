@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Curso } from '../models/curso';
 import { Observable } from 'rxjs';
 import { Formacion } from '../models/formacion';
+import { FormacionDto } from '../models/FormacionDto';
 
 @Injectable({
   providedIn: 'root'

@@ -26,7 +26,7 @@ export class VercursosComponent implements OnInit {
   cliente!: Cliente;
    //Declaracion de variables
    cursos!: Curso[];
-
+   //curso!: Curso;
 
 
    //Constructor

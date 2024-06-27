@@ -26,18 +26,19 @@
                       </thead>
                       <tbody>
 
-                          <tr *ngFor = "let formacion of formaciones" >
+                          <tr *ngFor = "let formacion of cursoHijo.formaciones" >
 
-                              <td> {{ formacion.tipo}} </td>
-                              <td> {{ formacion.dateFormacion | date: 'd/M/yy'}}</td>
-                              <td> {{ formacion.recuerdo | date: 'd/M/yy'}}</td>
-                              <td> {{ formacion.senaletica}}</td>
-                              <td> {{ formacion.numAsistentes}}</td>
-                              <td> {{ formacion.estado}}</td>
-                              <td> {{ formacion.impartidor}}</td>
+                              <td>{{ formacion.tipo}}</td>
+                              <td>{{ formacion.dateFormacion | date: 'd/M/yy'}}</td>
+                              <td>{{ formacion.recuerdo | date: 'd/M/yy'}}</td>
+                              <td>{{ formacion.senaletica}}</td>
+                              <td>{{ formacion.numAsistentes}}</td>
+                              <td>{{ formacion.estado}}</td>
+                              <td>{{ formacion.impartidor}}</td>
 
-
-                              <td><button (click)="deleteFormacion(formacion)" class="btn btn-danger">Delete</button></td>
+                              <td><button [routerLink]="['/cardio/menuPrincipal/alumnos']" class="btn btn-warning"  >Ver alumnos</button></td>
+                              <td><button [routerLink]="['/cardio/menuPrincipal/formaciones/edit', formacion.id]" class="btn btn-secondary"  >Update</button></td>
+                              <td><button (click)="mostrarDialogo(formacion)" class="btn btn-danger">Delete</button></td>
                             <!-- <td><button [routerLink]="['/cardio/menuPrincipal/equipos/edit', equipo.id]" class="btn btn-secondary"  >Update</button></td> -->
                           </tr>
 

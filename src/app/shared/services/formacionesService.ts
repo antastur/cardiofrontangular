@@ -10,15 +10,15 @@ import { FormacionDto } from '../models/FormacionDto';
 //Servicio para establecer enpoints y los metodos para obtener los objetos desde el server
 export class FormacionesService {
 
-  private baseUrl = "http://localhost:8080/cardio/menuPrincipal/clientes/formaciones";
+  private baseUrl = "http://localhost:8080/cardio/menuPrincipal/cursos/formaciones";
   private baseUrl2 ="http://localhost:8080/cardio/menuPrincipal/cursos/alumnos"
 
   //Constructor
 constructor(private http: HttpClient) { }
 
 //para obtener una lista de formaciones
-getFormaciones(): Observable<FormacionDto[]>{
-  return this.http.get<FormacionDto[]>(this.baseUrl);
+getFormaciones(): Observable<Formacion[]>{
+  return this.http.get<Formacion[]>(this.baseUrl);
 }
 
 //Obtener una formacion
